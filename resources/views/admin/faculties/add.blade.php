@@ -1,7 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
-<!-- Page Content -->
-<div id="page-wrapper">
+    <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -12,32 +11,18 @@
 
             <!-- /.col-lg-12 -->
             <div class="col-lg-7" style="padding-bottom:120px">
-                @if(count($errors) > 0)
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $err)
-                            {{$err}}<br>
-                            @endforeach
-                    </div>
-                    @endif
-                @if(session('noti'))
-                    <div class="alert alert-success">
-                        {{session('noti')}}
-                    </div>
-                    @endif
-                <form action="admin/faculty/add" method="POST">
-                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                    <div class="form-group">
-                        <label>Faculty Name</label>
-                        <input class="form-control" name="name" placeholder="Please Enter Faculty Name" />
-                    </div>
+                {!! Form::open(['method'=>'POST', 'route'=>'faculty.store']) !!}
+                <div class="form-group">
+                    {!! Form::label('Faculty name') !!}
+                    {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter Faculty Name']) !!}
+                </div>
 
-                    <button type="submit" class="btn btn-default">Add</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
-                </form>
+                {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}
+                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::close() !!}
             </div>
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-</div>
-    @endsection
+@endsection

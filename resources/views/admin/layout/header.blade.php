@@ -47,28 +47,28 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a href="{{route('admin.home')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="admin/faculty/list"><i class="fa fa-bar-chart-o fa-fw"></i> Faculties<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Faculties<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="admin/faculty/list">List Faculties</a>
+                            <a href="{{route('faculty.index')}}">List Faculties</a>
                         </li>
                         <li>
-                            <a href="admin/faculty/add">Add Faculties</a>
+                            <a href="{{route('faculty.create')}}">Add Faculties</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="admin/class/list"><i class="fa fa-cube fa-fw"></i> Classes<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cube fa-fw"></i> Classes<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="admin/class/list">List Classes</a>
+                            <a href="{{route('class.index')}}">List Classes</a>
                         </li>
                         <li>
-                            <a href="admin/class/add">Add Classes</a>
+                            <a href="{{route('class.create')}}">Add Classes</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -77,22 +77,22 @@
                     <a href="#"><i class="fa fa-cube fa-fw"></i> Students<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">List Students</a>
+                            <a href="{{route('students.index')}}">List Students</a>
                         </li>
                         <li>
-                            <a href="#">Add Students</a>
+                            <a href="{{route('students.create')}}">Add Students</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="admin/subject/list"><i class="fa fa-cube fa-fw"></i> Subjects<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cube fa-fw"></i> Subjects<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="admin/subject/list">List Subjects</a>
+                            <a href="{{route('subjects.index')}}">List Subjects</a>
                         </li>
                         <li>
-                            <a href="admin/subject/add">Add Subjects</a>
+                            <a href="{{route('subjects.create')}}">Add Subject</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -101,10 +101,10 @@
                     <a href="#"><i class="fa fa-cube fa-fw"></i> Results<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">List Results</a>
+                            <a href="{{route('results.index')}}">List Results</a>
                         </li>
                         <li>
-                            <a href="#">Add Results</a>
+                            <a href="{{route('results.create')}}">Add Result</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -113,10 +113,10 @@
                     <a href="#"><i class="fa fa-users fa-fw"></i> User<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">List User</a>
+                            <a href="{{route('users.index')}}">List User</a>
                         </li>
                         <li>
-                            <a href="#">Add User</a>
+                            <a href="{{route('users.create')}}">Add User</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

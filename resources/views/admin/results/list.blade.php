@@ -1,11 +1,10 @@
 @extends('admin.layout.index')
 @section('content')
-<!-- Page Content -->
-<div id="page-wrapper">
+    <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Faculty
+                <h1 class="page-header">Result
                     <small>List</small>
                 </h1>
             </div>
@@ -13,28 +12,36 @@
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                 <tr align="center">
-                    <th>Student ID</th>
-                    <th>Subject ID</th>
+                    <th>ID</th>
+                    <th>Subject</th>
+                    <th>Student</th>
                     <th>Mark</th>
-                    <th>Delete</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($resultData as $value)
-                <tr class="even gradeC" align="center">
-                    <td>{{$value->student_id}}</td>
-                    <td>{{$value->subject_id}}</td>
-                    <td>{{$value->mark}}</td>
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                </tr>
-                    @endforeach
+                @foreach($results as $result)
+                    <tr class="even gradeC" align="center">
+                        <td>{{$result->id}}</td>
+                        <td>{{$result->subject->name}}</td>
+                        <td>{{$result->student->name}}</td>
+                        <td>{{$result->mark}}</td>
+                        <td class="center"><button><a
+                                    href="{{route('results.edit', ['result'=>$result])}}">Edit</a></button></td>
+                        <td class="center">
+                            <form action="{{route('results.destroy', ['result'=>$result])}}" method="post">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-</div>
-    @endsection
+@endsection

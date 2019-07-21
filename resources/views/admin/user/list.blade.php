@@ -1,11 +1,10 @@
 @extends('admin.layout.index')
 @section('content')
-<!-- Page Content -->
-<div id="page-wrapper">
+    <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Faculty
+                <h1 class="page-header">Users
                     <small>List</small>
                 </h1>
             </div>
@@ -15,18 +14,44 @@
                 <tr align="center">
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Level</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="even gradeC" align="center">
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                </tr>
+
+                @foreach($users as $user)
+                    <tr class="even gradeC" align="center">
+                        <td>{{$user->id}}</td>
+                        <td>{{$user->name}}</td>
+                        <td>
+                            @if($user->level == 1)
+                                {{"Admin"}}
+                            @else
+                                {{"Member"}}
+                            @endif
+                        </td>
+                        <td>{{$user->email}}</td>
+                        <td class="center">
+                            <button><a href="{{route('users.edit', ['user'=>$user])}}">Edit</a></button>
+                        </td>
+                        <td class="center">
+                            <form action="{{route('users.destroy', ['user'=>$user])}}" method="post">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a> Delete</a></button>
+                            </form>
+
+                        </td>
+                    </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-</div>
-    @endsection
+@endsection

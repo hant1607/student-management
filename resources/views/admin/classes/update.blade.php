@@ -1,51 +1,39 @@
 @extends('admin.layout.index')
 @section('content')
     <!-- Page Content -->
-    <div id="page-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Class
-                        <small>{{$classData->name}}</small>
-                    </h1>
-                </div>
-                <!-- /.col-lg-12 -->
-                <div class="col-lg-7" style="padding-bottom:120px">
-                    @if(count($errors) > 0)
-                        <div class="alert alert-danger">
-                            @foreach($errors->all() as $err)
-                                {{$err}}<br>
-                            @endforeach
-                        </div>
-                    @endif
-
-                    <form action="admin/class/update/{{$classData->id}}" method="POST">
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
-                        <div class="form-group">
-                            <label>Class Name</label>
-                            <input class="form-control" name="className" placeholder="Please Enter Class Name"
-                                   value="{{$classData->name}}"/>
-
-                            <label>Faculty</label>
-
-                            <select class="form-control" name="facultyID">
-                                @if($classData->faculty)
-                                    <option value="{{$classData->faculty_id}}">{{$classData->faculty->name}}</option>
-                                @endif
-                                @foreach($facultyData as $value)
-                                    <option value="{{$value->id}}">{{$value->name}}</option>
-                                @endforeach
-                            </select>
-
-                        </div>
-
-                        <button type="submit" class="btn btn-default">Edit</button>
-                        <button type="reset" class="btn btn-default">Reset</button>
-                    </form>
-                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Class
+                    <small>{{$classData->name}}</small>
+                </h1>
             </div>
-            <!-- /.row -->
+            <!-- /.col-lg-12 -->
+            <div class="col-lg-7" style="padding-bottom:120px">
+
+                {!! Form::open(['method'=>'POST', 'route'=>['class.update', $classData->id]]) !!}
+                <div class="form-group">
+                    {!! Form::label('Class Name') !!}
+                    {!! Form::text('name', $classData->name, ['class'=>'form-control', 'placeholder'=>'Please enter class name']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Faculty') !!}
+                    <select class="form-control" name="faculty_id">
+                        @if($classData->faculty)
+                            <option value="{{$classData->faculty_id}}">{{$classData->faculty->name}}</option>
+                        @endif
+                        @foreach($facultyData as $value)
+                            <option value="{{$value->id}}">{{$value->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {!! Form::submit('Edit', ['class'=>'btn btn-default']) !!}
+                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::close() !!}
+            </div>
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.row -->
     </div>
+    <!-- /.container-fluid -->
 @endsection

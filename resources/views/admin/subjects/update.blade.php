@@ -1,29 +1,26 @@
-@include('admin.layout.index')
+@extends('admin.layout.index')
 @section('content')
 <!-- Page Content -->
-<div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Faculty
+                <h1 class="page-header">{{$subject->name}}
                     <small>Edit</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-lg-7" style="padding-bottom:120px">
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <label>Faculty Name</label>
-                        <input class="form-control" name="txtCateName" placeholder="Please Enter Faculty Name" />
-                    </div>
-                    
-                    <button type="submit" class="btn btn-default">Edit</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
-                </form>
+                {!! Form::open(['method'=>'PUT', 'route'=>['subjects.update', 'subject'=>$subject]]) !!}
+                <div class="form-group">
+                    {!! Form::label('Subject Name') !!}
+                    {!! Form::text('name', $subject->name, ['class'=>'form-control', 'placeholder'=>'Please enter faculty name']) !!}
+                </div>
+                {!! Form::submit('Edit', ['class'=>'btn btn-default']) !!}
+                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::close() !!}
             </div>
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-</div>
     @endsection

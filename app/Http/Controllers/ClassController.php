@@ -2,61 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Faculty;
-use App\ClassModel;
+use App\Http\Requests\ClassRequest;
+use App\Models\Faculty;
+use App\Models\ClassModel;
+use App\Repositories\ClassRepository;
 
 class ClassController extends Controller
 {
+    protected $classRepository;
+
+    public function __construct(ClassRepository $classRepository)
+    {
+        $this->classRepository = $classRepository;
+    }
+
     public function getList()
     {
-        $class = ClassModel::all();
-        return view('admin.classes.list', ['classData' => $class]);
+        $class = $this->classRepository->getAll();
+
+        return view('admin.classes.index', ['classData' => $class]);
     }
 
     public function getAdd()
     {
         $faculty = Faculty::all();
-        return view('admin.classes.add', ['facultyData'=>$faculty]);
+        return view('admin.classes.add', ['facultyData' => $faculty]);
     }
 
-    public function postAdd(Request $request)
+    public function postAdd(ClassRequest $request)
     {
-        $this->validate($request,
-            ['className'=>'required', 'facultyID'=>'required'],
-            ['className.require'=>'Please enter class name', 'facultyID.required'=>"Please choose faculty"]
-        );
-        $class = new ClassModel;
-        $class->name = $request->className;
-        $class->faculty_id = $request->facultyID;
-        $class->save();
-        return redirect('admin/class/add')->with('noti','Add success!');
+        $this->classRepository->create($request->all());
+        return redirect()->back()->with('noti', 'Add success!');
     }
 
-    public function getUpdate($id)
+    public function getUpdate(ClassModel $class)
     {
         $faculty = Faculty::all();
-        $class = ClassModel::find($id);
-        return view('admin.classes.update', ['classData'=>$class], ['facultyData'=>$faculty]);
+        return view('admin.classes.update', ['classData' => $class], ['facultyData' => $faculty]);
     }
 
-    public function postUpdate(Request $request, $id)
+    public function postUpdate(ClassRequest $request, $id)
     {
-        $class = ClassModel::find($id);
-        $this->validate($request,
-            ['className'=>'required|unique:classes,name,' . $id, 'facultyID'=>'required|unique:classes,faculty_id,' . $id],
-            ['className.require'=>'Please enter class name', 'className.unique' => "This class name already exists", 'facultyID.required'=>"Please choose faculty", 'facultyID.unique' => "This faculty name already exists"]
-        );
-        $class->name = $request->className;
-        $class->faculty_id = $request->facultyID;
-        $class->save();
-        return redirect('admin/class/list')->with('noti', 'Update successful');
+        $this->classRepository->update($id, $request->all());
+        return redirect(route('class.index'))->with('noti', 'Update successful');
     }
 
     public function getDelete($id)
     {
-        $class = ClassModel::find($id);
-        $class->delete();
-        return redirect('admin/class/list')->with('noti', 'Delete successul');
+        $this->classRepository->delete($id);
+        return redirect(route('class.index'))->with('noti', 'Delete successful');
     }
 }

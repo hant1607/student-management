@@ -21,7 +21,8 @@
     <link href="admin_style/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables CSS -->
-    <link href="admin_style/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="admin_style/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+          rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
     <link href="admin_style/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
@@ -32,8 +33,26 @@
 <div id="wrapper">
 
     @include('admin.layout.header')
+    <div id="page-wrapper">
+        <div class="col-lg-7">
+        @if(count($errors) > 0)
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $err)
+                    {{$err}}<br>
+                @endforeach
+            </div>
+        @endif
+        @if(session('noti'))
+            <div class="alert alert-success">
+                {{session('noti')}}
+            </div>
+        @endif
+        </div>
+        @yield('content')
+            <div class="col-lg-7" style="padding-bottom:120px">
 
-    @yield('content')
+            </div>
+    </div>
 
 </div>
 <!-- /#wrapper -->
@@ -56,7 +75,7 @@
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#dataTables-example').DataTable({
             responsive: true
         });

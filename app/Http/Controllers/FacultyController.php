@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Faculty;
+use App\Http\Requests\FacultyRequest;
+use App\Repositories\FacultyRepository;
+use App\Models\Faculty;
 
 class FacultyController extends Controller
 {
+    protected $facultyRepository;
+
+    public function __construct(FacultyRepository $facultyRepository)
+    {
+        $this->facultyRepository = $facultyRepository;
+    }
+
     public function getList()
     {
-        $faculty = Faculty::all();
+        $faculty = $this->facultyRepository->getAll();
         return view('admin.faculties.list', ['facultyData' => $faculty]);
     }
 
@@ -18,38 +26,27 @@ class FacultyController extends Controller
         return view('admin.faculties.add');
     }
 
-    public function postAdd(Request $request)
+    public function postAdd(FacultyRequest $request)
     {
-        $this->validate($request,
-            ['name' => 'required'],
-            ['name.required' => 'Please enter name!']);
-        $faculty = new Faculty;
-        $faculty->name = $request->name;
-        $faculty->save();
-        return redirect('admin/faculty/add')->with('noti', 'Add successful');
+        $this->facultyRepository->create($request->all());
+        return redirect(route('faculty.create'))->with('noti', 'Add successful');
     }
 
-    public function getUpdate($id)
+    public function getUpdate(Faculty $faculty)
     {
-        $faculty = Faculty::find($id);
         return view('admin.faculties.update', ['facultyData' => $faculty]);
     }
 
-    public function postUpdate(Request $request, $id)
+    public function postUpdate(FacultyRequest $request, $id)
     {
-        $faculty = Faculty::find($id);
-        $this->validate($request, ['name' => 'required|unique:faculties,name,' . $id], ['name.required' => 'Please enter name', 'name.unique' => "This faculty name already exists"]);
-        //$faculty = new Faculty;
-        $faculty->name = $request->name;
-        $faculty->save();
-        return redirect('admin/faculty/list')->with('noti', 'Edit success');
+        $this->facultyRepository->update($id, $request->all());
+        return redirect(route('faculty.index'))->with('noti', 'Edit successful');
 
     }
 
     public function getDelete($id)
     {
-        $faculty = Faculty::find($id);
-        $faculty->delete();
-        return redirect('admin/faculty/list')->with('noti', 'Delete successful');
+        $this->facultyRepository->delete($id);
+        return redirect(route('faculty.index'))->with('noti', 'Delete successful');
     }
 }

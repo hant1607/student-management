@@ -1,20 +1,20 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class ClassModel extends Model
 {
-    //
+    protected $fillable = ['name', 'faculty_id'];
 
     protected $table = 'classes';
 
     public function faculty(){
-        return $this->belongsTo('App\Faculty', 'faculty_id', 'id');
+        return $this->belongsTo(Faculty::class);
     }
 
     public function student(){
-        return $this->hasMany('App\Student', 'student_id', 'id');
+        return $this->hasMany(Student::class);
     }
 }

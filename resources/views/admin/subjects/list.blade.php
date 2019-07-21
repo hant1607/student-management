@@ -1,7 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
 <!-- Page Content -->
-<div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -16,16 +15,25 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Edit</th>
-                    <td>Delete</td>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($subjectData as $value)
+                @foreach($subjects as $subject)
                 <tr class="even gradeC" align="center">
-                    <td>{{$value->id}}</td>
-                    <td>{{$value->name}}</td>
-                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
+                    <td>{{$subject->id}}</td>
+                    <td>{{$subject->name}}</td>
+                    <td class="center">
+{{--                        <a href="{{route('subjects.edit', ['subject'=>$subject])}}">Edit</a>--}}
+                        <button type="submit"><a href="{{route('subjects.edit', ['subject'=>$subject])}}">Edit</a></button>
+                    </td>
+                    <td class="center">
+                        <form action="{{route('subjects.destroy', ['subject'=>$subject])}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a></button>
+                        </form>
+                    </td>
                 </tr>
                     @endforeach
                 </tbody>
@@ -34,5 +42,4 @@
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-</div>
     @endsection

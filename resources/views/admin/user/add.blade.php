@@ -1,30 +1,44 @@
 @extends('admin.layout.index')
 @section('content')
-<!-- Page Content -->
-<div id="page-wrapper">
+    <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Category
+                <h1 class="page-header">User
                     <small>Add</small>
                 </h1>
             </div>
 
             <!-- /.col-lg-12 -->
             <div class="col-lg-7" style="padding-bottom:120px">
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <label>Faculty Name</label>
-                        <input class="form-control" name="txtFacultyName" placeholder="Please Enter Faculty Name" />
-                    </div>
-
-                    <button type="submit" class="btn btn-default">Add</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
-                </form>
+                {!! Form::open(['method'=>'POST', 'route'=>'users.store']) !!}
+                <div class="form-group">
+                    {!! Form::label('Name') !!}
+                    {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Level') !!}
+                    {!! Form::radio('level', '1', ['class' => 'radio-inline']) !!} Admin
+                    {!! Form::radio('level', '0', ['class' => 'radio-inline']) !!} Member
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Email') !!}
+                    {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>'Please enter email']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Password') !!}
+                    {!! Form::password('password', ['class'=>'form-control', 'placeholder' => 'Please enter password']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Re-enter Password') !!}
+                    {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}
+                </div>
+                {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}
+                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::close() !!}
             </div>
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-</div>
-    @endsection
+@endsection

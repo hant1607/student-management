@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,57 +12,41 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::group(['prefix'=>'admin'], function (){
    Route::group(['prefix'=>'faculty'], function(){
-       Route::get('list', 'FacultyController@getList');
+       Route::get('list', 'FacultyController@getList')->name('faculty.index');
 
-       Route::get('add', 'FacultyController@getAdd');
-       Route::post('add', 'FacultyController@postAdd');
+       Route::get('add', 'FacultyController@getAdd')->name('faculty.create');
+       Route::post('add', 'FacultyController@postAdd')->name('faculty.store');
 
-       Route::get('update/{id}', 'FacultyController@getUpdate');
-       Route::post('update/{id}', 'FacultyController@postUpdate');
+       Route::get('update/{faculty}', 'FacultyController@getUpdate')->name('faculty.edit');
+       Route::post('update/{id}', 'FacultyController@postUpdate')->name('faculty.update');
 
-       Route::get('delete/{id}', 'FacultyController@getDelete');
+       Route::get('delete/{id}', 'FacultyController@getDelete')->name('faculty.delete');
    }) ;
 
     Route::group(['prefix'=>'class'], function(){
-        Route::get('list', 'ClassController@getList');
+        Route::get('list', 'ClassController@getList')->name('class.index');
 
-        Route::get('add', 'ClassController@getAdd');
-        Route::post('add', 'ClassController@postAdd');
+        Route::get('add', 'ClassController@getAdd')->name('class.create');
+        Route::post('add', 'ClassController@postAdd')->name('class.store');
 
-        Route::get('update/{id}', 'ClassController@getUpdate');
-        Route::post('update/{id}', 'ClassController@postUpdate');
+        Route::get('update/{class}', 'ClassController@getUpdate')->name('class.edit');
+        Route::post('update/{class}', 'ClassController@postUpdate')->name('class.update');
 
-        Route::get('delete/{id}', 'ClassController@getDelete');
+        Route::get('delete/{class}', 'ClassController@getDelete')->name('class.delete');
     }) ;
     //Route::resource('classes', 'ClassController');
 
-    Route::group(['prefix'=>'student'], function(){
-        Route::get('list', 'StudentController@getList');
-        Route::get('add', 'StudentController@getAdd');
-        Route::get('update', 'StudentController@getUpdate');
-    }) ;
+    Route::resource('students', 'StudentController');
+    Route::resource('results', 'ResultController');
+    Route::resource('subjects', 'SubjectController');
+    Route::resource('users', 'UserController');
 
-    Route::group(['prefix'=>'subject'], function(){
-        Route::get('list', 'SubjectController@getList');
-        Route::get('add', 'SubjectController@getAdd');
-        Route::get('update', 'SubjectController@getUpdate');
-    }) ;
-
-    Route::group(['prefix'=>'result'], function(){
-        Route::get('list', 'ResultController@getList');
-        Route::get('add', 'ResultController@getAdd');
-        Route::get('update', 'ResultController@getUpdate');
-    }) ;
-
-    Route::group(['prefix'=>'user'], function(){
-        Route::get('list', 'UserController@getList');
-        Route::get('add', 'UserController@getAdd');
-        Route::get('update', 'UserController@getUpdate');
-    }) ;
+    Route::get('home', 'StudentController@index')->name('admin.home');
 });
