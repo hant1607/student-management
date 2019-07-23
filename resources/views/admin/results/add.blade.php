@@ -13,20 +13,20 @@
             <div class="col-lg-7" style="padding-bottom:120px">
                 {!! Form::open(['method'=>'POST', 'route'=>'results.store']) !!}
                 <div class="form-group">
-                    {!! Form::label('Subject') !!}
-                    <select class="form-control" name="subject_id">
-                        <option value="">Please choose subject</option>
-                        @foreach($results as $result)
-                            <option value="{{$result->subject_id}}">{{$result->subject->name}}</option>
+                    {!! Form::label('Student Name') !!}
+                    <select class="form-control" name="student_id">
+                        <option value="">Please choose student</option>
+                        @foreach($students as $student)
+                            <option value="{{$student->id}}">{{$student->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Student Name') !!}
-                    <select class="form-control" name="student_id">
-                        <option value="">Please choose student</option>
-                        @foreach($results as $result)
-                            <option value="{{$result->student_id}}">{{$result->student->name}}</option>
+                    {!! Form::label('Subject') !!}
+                    <select class="form-control" name="subject_id">
+                        <option value="">Please choose subject</option>
+                        @foreach($subjects as $subject)
+                            <option value="{{$subject->id}}">{{$subject->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -34,7 +34,6 @@
                     {!! Form::label('Mark') !!}
                     {!! Form::text('mark', old('mark'), ['class'=>'form-control', 'placeholder'=>'Please enter mark']) !!}
                 </div>
-
                 {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
                 {!! Form::close() !!}

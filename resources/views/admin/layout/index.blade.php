@@ -49,9 +49,6 @@
         @endif
         </div>
         @yield('content')
-            <div class="col-lg-7" style="padding-bottom:120px">
-
-            </div>
     </div>
 
 </div>

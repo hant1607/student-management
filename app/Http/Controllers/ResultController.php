@@ -35,8 +35,9 @@ class ResultController extends Controller
      */
     public function create()
     {
-        $results = Result::all();
-        return view('admin.results.add', ['results'=>$results]);
+        $subjects = Subject::all();
+        $students = Student::all();
+        return view('admin.results.add', ['students'=>$students, 'subjects'=>$subjects]);
     }
 
     /**
@@ -59,7 +60,7 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

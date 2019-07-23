@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 use App\Http\Requests\StudentRequest;
+use App\Models\Result;
 use App\Models\Student;
 
 class StudentRepository extends EloquentRepository{
@@ -13,8 +14,10 @@ class StudentRepository extends EloquentRepository{
     {
         return Student::class;
     }
-    public function __construct(Student $student){
+    protected $resultRepository;
+    public function __construct(Student $student, Result $result){
         parent::__construct($student);
+        $this->resultRepository = $result;
     }
     public function uploadImage(StudentRequest $request)
     {
@@ -30,5 +33,9 @@ class StudentRepository extends EloquentRepository{
             $data['image'] = $name;
         }
         return $data;
+    }
+    public function getOne($id)
+    {
+        return $this->resultRepository->where('student_id', $id)->get();
     }
 }

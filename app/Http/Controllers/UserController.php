@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -93,5 +95,16 @@ class UserController extends Controller
     {
         $this->userRepository->delete($id);
         return redirect(route('users.index'))->with('noti', 'Delete successful');
+    }
+
+    public function getLogin(){
+        return view('admin.login');
+    }
+
+    public function postLogin(LoginRequest $request){
+//        if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
+//            return redirect(route('students.index'));
+//        }
+//        else redirect()->back()->with('noti', 'Can not to login');
     }
 }

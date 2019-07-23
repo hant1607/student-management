@@ -26,6 +26,7 @@
                                 <option value="{{$value->id}}">{{$value->name}}</option>
                             @endforeach
                         </select>
+{{--                        {!! Form::select('faculty_id', $facultyData, $facultyData->name, ['class'=>'form-control']) !!}--}}
                     </div>
 
                     {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}

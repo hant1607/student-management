@@ -50,3 +50,6 @@ Route::group(['prefix'=>'admin'], function (){
 
     Route::get('home', 'StudentController@index')->name('admin.home');
 });
+
+Route::get('admin/login', 'UserController@getLogin')->name('admin.login.index');
+Route::post('admin/login', 'UserController@postLogin')->name('admin.login');

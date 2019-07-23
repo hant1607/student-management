@@ -59,7 +59,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $results = $this->studentRepository->getOne($id);
+        return view('admin.results.list', ['results'=>$results, 'id'=>$id]);
     }
 
     /**

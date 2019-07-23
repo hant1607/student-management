@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
-    protected $fillable = ['subject_id', 'student_id', 'mark'];
+    protected $fillable = ['student_id', 'subject_id', 'mark'];
     protected $table = 'results';
 
     public function student(){

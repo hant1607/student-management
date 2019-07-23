@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
-<!-- Page Content -->
+    <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -18,37 +18,42 @@
                     <th>Birthday</th>
                     <th>Gender</th>
                     <th>Image</th>
+                    <th>Result</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($students as $student)
-                <tr class="even gradeC" align="center">
-                    <td>{{$student->id}}</td>
-                    <td>{{$student->name}}</td>
-                    @if(empty($student->class_id))
-                        <td>{{''}}</td>
-                    @else
-                        <td>{{$student->class->name}}
-                    @endif
-                    <td>{{$student->birthday}}</td>
-                    <td>{{$student->gender}}</td>
-                    <td><img width="100px" height="70px" src="upload/{{$student->image}}"></td>
-                    <td class="center"><button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button></td>
-                    <td class="center">
-                        <form action="{{route('students.destroy', ['student'=>$student])}}" method="post">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a></button>
-                        </form>
-                    </td>
-                </tr>
-                    @endforeach
+                    <tr class="even gradeC" align="center">
+                        <td>{{$student->id}}</td>
+                        <td>{{$student->name}}</td>
+                        @if(empty($student->class_id))
+                            <td>{{''}}</td>
+                        @else
+                            <td>{{$student->class->name}}
+                        @endif
+                        <td>{{$student->birthday}}</td>
+                        <td>{{$student->gender}}</td>
+                        <td><img width="100px" height="70px" src="upload/{{$student->image}}"></td>
+                        <td>
+                            <button><a href="{{route('students.show', $student->id)}}">Mark</a></button>
+                        </td>
+                        <td class="center">
+                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>
+                        </td>
+                        <td class="center">
+                            {!! Form::open(['method'=>'DELETE', 'route'=>['students.destroy', 'student'=>$student]]) !!}
+                            <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
+                            </button>
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-    @endsection
+@endsection
