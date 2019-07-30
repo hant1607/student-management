@@ -23,16 +23,20 @@ class SubjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required'
+        $arr_validate = [
+            'name' =>'required'
         ];
+        if(!$this->subject) {
+            $arr_validate['name'] = 'unique:subjects';
+        }
+        return $arr_validate;
     }
 
     public function messages()
     {
         return [
             'name.required' => 'Please enter subject name',
-            'name.uique' => 'This subject already exists'
+            'name.unique' => 'This subject already exists'
         ];
     }
 }

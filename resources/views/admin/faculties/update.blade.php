@@ -15,8 +15,7 @@
                     {!! Form::label('Faculty Name') !!}
                     {!! Form::text('name', $facultyData->name, ['class'=>'form-control', 'placeholder'=>'Please enter faculty name']) !!}
                 </div>
-                {!! Form::submit('Edit', ['class'=>'btn btn-default']) !!}
-                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}
                 {!! Form::close() !!}
             </div>
         </div>

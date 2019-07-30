@@ -17,7 +17,7 @@
                     {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter Subject Name']) !!}
                 </div>
 
-                {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
                 {!! Form::close() !!}
             </div>

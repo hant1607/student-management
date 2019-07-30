@@ -23,9 +23,14 @@ class FacultyRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|unique:faculties'
+        $arr_validate = [
+            'name' =>'required'
         ];
+        dd($this->id);
+        if(!$this->id) {
+            $arr_validate['name'] = 'unique:faculties';
+        }
+        return $arr_validate;
     }
     public function messages()
     {

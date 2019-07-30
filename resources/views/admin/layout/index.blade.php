@@ -26,6 +26,7 @@
 
     <!-- DataTables Responsive CSS -->
     <link href="admin_style/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 </head>
 
 <body>
@@ -69,7 +70,8 @@
 <!-- DataTables JavaScript -->
 <script src="admin_style/bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
 <script src="admin_style/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
     $(document).ready(function () {
@@ -78,6 +80,7 @@
         });
     });
 </script>
+@yield('script')
 
 </body>
 

@@ -47,8 +47,7 @@
                     <input class="form-control" type="password" name="passwordAgain"
                            placeholder="Please re-enter password" value="{{$user->password}}">
                 </div>
-                {!! Form::submit('Edit', ['class'=>'btn btn-default']) !!}
-                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}
                 {!! Form::close() !!}
             </div>
         </div>

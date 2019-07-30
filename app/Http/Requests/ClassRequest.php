@@ -23,10 +23,14 @@ class ClassRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required',
+        $arr_validate = [
+            'name' =>'required',
             'faculty_id' => 'required'
         ];
+        if(!$this->class) {
+            $arr_validate['name'] = 'unique:classes,name';
+        }
+        return $arr_validate;
     }
 
 }

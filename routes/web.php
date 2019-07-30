@@ -43,12 +43,16 @@ Route::group(['prefix'=>'admin'], function (){
     }) ;
     //Route::resource('classes', 'ClassController');
 
+
+    Route::get('students/search', 'StudentController@search')->name('students.search');
     Route::resource('students', 'StudentController');
     Route::resource('results', 'ResultController');
     Route::resource('subjects', 'SubjectController');
     Route::resource('users', 'UserController');
 
     Route::get('home', 'StudentController@index')->name('admin.home');
+    Route::get('results/students/{id}', 'ResultController@getAddStudentResult')->name('results.addResult');
+    Route::post('results/students/{id}', 'ResultController@postStudentResult')->name('results.storeResults');
 });
 
 Route::get('admin/login', 'UserController@getLogin')->name('admin.login.index');

@@ -38,10 +38,14 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    {!! Form::label('Phone') !!}
+                    {!! Form::text('phone', old('phone'), ['class'=>'form-control', 'placeholder'=>'Please enter phone number']) !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('Image') !!}
                     {!! Form::file('image') !!}
                 </div>
-                {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
                 {!! Form::close() !!}
             </div>

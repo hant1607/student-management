@@ -24,9 +24,10 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
+            'name'=>'required|alpha',
             'class_id'=>'required',
-            'birthday'=>'required|date-format:Y-m-d'
+            'birthday'=>'required|date-format:Y-m-d',
+            'phone'=>'numeric'
         ];
     }
     public function messages()

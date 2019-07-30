@@ -33,7 +33,7 @@
                     {!! Form::label('Re-enter Password') !!}
                     {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}
                 </div>
-                {!! Form::submit('Add', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
                 {!! Form::close() !!}
             </div>

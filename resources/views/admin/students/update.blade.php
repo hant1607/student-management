@@ -40,11 +40,15 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    {!! Form::label('Phone') !!}
+                    {!! Form::text('phone', $student->phone, ['class'=>'form-control', 'placeholder'=>'Please enter phone number']) !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('Image') !!}
                     {!! Form::file('image') !!}
+                    <img width="100px" height="70px" src="upload/{{$student->image}}">
                 </div>
-                {!! Form::submit('Edit', ['class'=>'btn btn-default']) !!}
-                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}
                 {!! Form::close() !!}
             </div>
         </div>

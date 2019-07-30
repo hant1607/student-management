@@ -33,8 +33,7 @@
                     {!! Form::label('Mark') !!}
                     {!! Form::text('mark', $result->mark, ['class'=>'form-control', 'placeholder'=>'Please enter mark']) !!}
                 </div>
-                {!! Form::submit('Edit', ['class'=>'btn btn-default']) !!}
-                {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}
                 {!! Form::close() !!}
             </div>
         </div>
