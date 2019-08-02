@@ -110,7 +110,7 @@ class ResultController extends Controller
 
     public function getAddStudentResult($id)
     {
-        $subjects = Subject::all();
+        $subjects = $this->subjectRepository->getAll();
         $results = $this->studentRepository->getOne($id);
         return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
     }

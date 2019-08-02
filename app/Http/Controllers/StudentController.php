@@ -7,18 +7,24 @@ use App\Http\Requests\StudentRequest;
 use App\Repositories\StudentRepository;
 use App\Models\Student;
 use App\Repositories\SubjectRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class StudentController extends Controller
 {
     protected $studentRepository;
     protected $subjectRepository;
+    protected $userRepository;
 
-    public function __construct(StudentRepository $studentRepository, SubjectRepository $subjectRepository)
+    public function __construct(StudentRepository $studentRepository,
+                                SubjectRepository $subjectRepository,
+                                UserRepository $userRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->subjectRepository = $subjectRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -26,11 +32,13 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = $this->studentRepository->getAll();
+        $students = $this->studentRepository->search($request->all());
         $subjects = $this->subjectRepository->getAll();
-        return view('admin.students.list', ['students' => $students, 'subjects'=>$subjects]);
+        $sj = $subjects->pluck('name', 'id')->all();
+
+        return view('admin.students.list', ['students' => $students, 'subjects'=>$subjects, 'sj'=>$sj]);
     }
 
     /**
@@ -52,8 +60,17 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
-        $data = $this->studentRepository->uploadImage($request);
-        $this->studentRepository->create($data);
+        DB::beginTransaction();
+        try {
+            $user = $this->userRepository->create($request->all());
+            $data = $this->studentRepository->uploadImage($request);
+            $data['user_id'] = $user->id;
+            $this->studentRepository->create($data);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
         return redirect()->back()->with('noti', 'Add successful!');
     }
 
@@ -107,10 +124,4 @@ class StudentController extends Controller
         return redirect(route('students.index'))->with('noti', 'Delete successful');
     }
 
-    public function search(Request $request)
-    {
-        $subjects = $this->subjectRepository->getAll();
-        $students = $this->studentRepository->search($request->all());
-        return view('admin.students.list', compact('students', 'subjects'));
-    }
 }

@@ -27,7 +27,7 @@ class SubjectRequest extends FormRequest
             'name' =>'required'
         ];
         if(!$this->subject) {
-            $arr_validate['name'] = 'unique:subjects';
+            $arr_validate['name'] = 'required|unique:subjects';
         }
         return $arr_validate;
     }

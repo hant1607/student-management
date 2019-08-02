@@ -47,7 +47,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $this->userRepository->create($request->all());
-        return redirect()->back()->with('noti', 'Update successful');
+        return redirect()->back()->with('noti', 'Add successful');
     }
 
     /**

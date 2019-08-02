@@ -28,9 +28,15 @@ class ClassRequest extends FormRequest
             'faculty_id' => 'required'
         ];
         if(!$this->class) {
-            $arr_validate['name'] = 'unique:classes,name';
+            $arr_validate['name'] = 'required|unique:classes,name';
         }
         return $arr_validate;
     }
-
+    public function messages()
+    {
+        return [
+          'name.required'=>'Please enter class name',
+          'faculty_id.required'=>'Please choose faculty'
+        ];
+    }
 }

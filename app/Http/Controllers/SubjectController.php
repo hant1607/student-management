@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SubjectRequest;
 use App\Models\Subject;
+use App\Repositories\ResultRepository;
 use App\Repositories\SubjectRepository;
 
 class SubjectController extends Controller
 {
     protected $subjectRepository;
+    protected $resultRepository;
 
-    public function __construct(SubjectRepository $subjectRepository)
+    public function __construct(SubjectRepository $subjectRepository, ResultRepository $resultRepository)
     {
         $this->subjectRepository = $subjectRepository;
+        $this->resultRepository = $resultRepository;
     }
 
     /**

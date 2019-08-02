@@ -27,12 +27,10 @@ class UserRequest extends FormRequest
             'name'=>'required',
             'level'=>'required',
             'email'=>'required|email',
+            'phone'=>'required|unique|numeric',
             'password'=>'required|min:4|max:10',
             'passwordAgain'=>'required|same:password'
         ];
-        if(!$this->user){
-            $arr_validate['email'] = 'unique';
-        }
         return $arr_validate;
     }
 }

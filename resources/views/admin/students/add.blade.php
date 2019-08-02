@@ -3,16 +3,22 @@
     <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <h1 class="page-header">Student
+                    <small>Add</small>
+                </h1>
+            </div>
+            <div class="col-lg-5" style="margin-left: 5%">
+                <h1 class="page-header">User
                     <small>Add</small>
                 </h1>
             </div>
 
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
 
-                {!! Form::open(['method'=>'POST', 'route'=>'students.store', 'enctype'=>'multipart/form-data']) !!}
+
+            {!! Form::open(['method'=>'POST', 'route'=>'students.store', 'enctype'=>'multipart/form-data']) !!}
+            <div class="col-lg-6" style="padding-bottom:120px">
                 <div class="form-group">
                     {!! Form::label('Student Name') !!}
                     {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter student name']) !!}
@@ -45,10 +51,34 @@
                     {!! Form::label('Image') !!}
                     {!! Form::file('image') !!}
                 </div>
+            </div>
+
+            <div class="col-lg-5" style="padding-bottom:120px; margin-left: 5%">
+                <div class="form-group">
+                    {!! Form::label('User Name') !!}
+                    {!! Form::text('username', old('username'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Level') !!}
+                    {!! Form::radio('level', '1', ['class' => 'radio-inline']) !!} Admin
+                    {!! Form::radio('level', '2', ['class' => 'radio-inline']) !!} Member
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Email') !!}
+                    {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>'Please enter email']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Password') !!}
+                    {!! Form::password('password', ['class'=>'form-control', 'placeholder' => 'Please enter password']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Re-enter Password') !!}
+                    {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}
+                </div>
                 {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
-                {!! Form::close() !!}
             </div>
+            {!! Form::close() !!}
         </div>
         <!-- /.row -->
     </div>

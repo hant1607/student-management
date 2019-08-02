@@ -6,6 +6,7 @@ use App\Http\Requests\StudentRequest;
 use App\Models\Result;
 use App\Models\Student;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends EloquentRepository
 {
@@ -78,7 +79,17 @@ class StudentRepository extends EloquentRepository
             });
 
         }
-
+        if(isset($data['finish'])){
+            $countSubjects = DB::table('subjects')->count();
+            if($data['finish'] == 1){
+                $students = $this->model->has('subjects', $countSubjects);
+            }
+            if($data['finish'] == 2){
+                //$students = $this->model->withCount('subjects')->having('subjects_count', '<', $countSubjects)->get();
+                $students = $this->model->has('subjects', '<>', $countSubjects);
+            }
+            return $students->get();
+        }
         return $students->get();
 
     }

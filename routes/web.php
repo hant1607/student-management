@@ -41,12 +41,10 @@ Route::group(['prefix'=>'admin'], function (){
 
         Route::get('delete/{class}', 'ClassController@getDelete')->name('class.delete');
     }) ;
-    //Route::resource('classes', 'ClassController');
 
-
-    Route::get('students/search', 'StudentController@search')->name('students.search');
     Route::resource('students', 'StudentController');
     Route::resource('results', 'ResultController');
+
     Route::resource('subjects', 'SubjectController');
     Route::resource('users', 'UserController');
 

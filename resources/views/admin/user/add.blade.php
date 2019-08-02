@@ -13,7 +13,7 @@
             <div class="col-lg-7" style="padding-bottom:120px">
                 {!! Form::open(['method'=>'POST', 'route'=>'users.store']) !!}
                 <div class="form-group">
-                    {!! Form::label('Name') !!}
+                    {!! Form::label('User Name') !!}
                     {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
                 </div>
                 <div class="form-group">

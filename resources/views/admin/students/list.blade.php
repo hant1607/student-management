@@ -9,7 +9,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            {!! Form::open(['method'=>'GET', 'route'=>'students.search', 'class'=>'form-inline']) !!}
+            {!! Form::open(['method'=>'GET', 'route'=>'students.index', 'class'=>'form-inline']) !!}
             <div class="sidebar-search" style="margin-bottom: 5%; display: block">
                 <div class="col-sm-4">
                     {!! Form::label('From mark:') !!}
@@ -23,36 +23,42 @@
                     {!! Form::label('To age:') !!}
                     {!! Form::text('max_age',\Request::get('max_age'), ['class'=>'form-control','style' => 'margin-top:5%']) !!}
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     {!! Form::label('Subject') !!}
-                    <select class="form-control" name="subject_id">
-                        <option value="">Subject</option>
-                        @foreach($subjects as $subject)
-                            <option value="{{$subject->id}}">{{$subject->name}}</option>
-                        @endforeach
-                    </select>
-                    <span class="input-group-btn" style="float:right; margin-right: 10%">
+                    {!! Form::select('subject_id', ['' => 'Subject'] + $sj,\Request::get('subject_id'), ['class'=>'form-control']) !!}
+                    <span class="input-group-btn" style="float:right; margin-right: 25%">
                                     <button class="btn btn-default btn-primary" type="submit" name="btnSearch">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </span>
+                    {!! Form::label('Finish all subject:',null, ['style' => 'margin-top:5%']) !!}
+                    <label class="radio-inline">
+                        <input name="finish" value="1" type="radio" {{(\Request::get('finish') == 1) ? 'checked' : ''}}>Yes
+                    </label>
+                    <label class="radio-inline">
+                        <input name="finish" value="2" type="radio" {{(\Request::get('finish') == 2) ? 'checked' : ''}}>No
+                    </label>
                 </div>
 
                 <div class="col-sm-12" style="margin-top: 1%">
                     <label style="margin-right: 1%">Phone:</label>
                     <label class="checkbox-inline">
-                        <input name="phones[1]" value="1" type="checkbox" {{isset(\Request::get('phones')[1]) ? 'checked': ''}}>Viettel
+                        <input name="phones[1]" value="1"
+                               type="checkbox" {{isset(\Request::get('phones')[1]) ? 'checked': ''}}>Viettel
                     </label>
                     <label class="checkbox-inline">
-                        <input name="phones[2]" value="2" type="checkbox" {{isset(\Request::get('phones')[2]) ? 'checked': ''}}>Mobiphone
+                        <input name="phones[2]" value="2"
+                               type="checkbox" {{isset(\Request::get('phones')[2]) ? 'checked': ''}}>Mobiphone
                     </label>
                     <label class="checkbox-inline">
-                        <input name="phones[3]" value="3" type="checkbox" {{isset(\Request::get('phones')[3]) ? 'checked': ''}}>Vinaphone
+                        <input name="phones[3]" value="3"
+                               type="checkbox" {{isset(\Request::get('phones')[3]) ? 'checked': ''}}>Vinaphone
                     </label>
                 </div>
             </div>
             <!-- /input-group -->
             {!! Form::close() !!}
+
             <table class="table table-striped table-bordered table-hover" style="margin-top: 25%">
                 <thead>
                 <tr align="center">

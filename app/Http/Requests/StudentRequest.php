@@ -23,12 +23,26 @@ class StudentRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'=>'required|alpha',
+        $arr_validate = [
+            'name'=>'required',
             'class_id'=>'required',
+            'phone'=>'required|numeric',
             'birthday'=>'required|date-format:Y-m-d',
-            'phone'=>'numeric'
         ];
+        if($this->request->has('username')) {
+            $arr_validate = array_merge($arr_validate,[
+                'username'=>'required',
+                'level'=>'required',
+                'email'=>'required|email',
+                'phone'=>'required|numeric',
+                'password'=>'required|min:4|max:10',
+                'passwordAgain'=>'required|same:password'
+            ]);
+        }
+        if(!$this->student){
+            $arr_validate['phone'] = 'unique:students,phone';
+        }
+        return $arr_validate;
     }
     public function messages()
     {
