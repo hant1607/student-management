@@ -21,4 +21,5 @@ class ResultRepository extends EloquentRepository
     {
         parent::__construct($result);
     }
+
 }

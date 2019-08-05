@@ -9,6 +9,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
+
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr align="center">
@@ -41,6 +42,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {!! $results->links() !!}
         </div>
         <!-- /.row -->
     </div>

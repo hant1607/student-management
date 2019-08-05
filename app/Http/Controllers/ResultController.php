@@ -10,6 +10,7 @@ use App\Models\Subject;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
+use App\Jobs\SendEmailJob;
 
 class ResultController extends Controller
 {
@@ -31,6 +32,7 @@ class ResultController extends Controller
      */
     public function index()
     {
+
         $results = $this->resultRepository->getAll();
         return view('admin.results.list', ['results' => $results]);
     }
@@ -127,6 +129,7 @@ class ResultController extends Controller
                     ]);
             }
         }
-        return redirect(route('results.index'))->with('noti', 'Add successful');
+        return redirect(route('students.show', $results->id))->with('noti', 'Add successful');
     }
+
 }

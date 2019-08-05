@@ -49,6 +49,11 @@
             </div>
         @endif
         </div>
+        <style>
+            .table-bordered th{
+                text-align: center;
+            }
+        </style>
         @yield('content')
     </div>
 

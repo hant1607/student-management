@@ -79,12 +79,12 @@ class StudentRepository extends EloquentRepository
             });
 
         }
-        if(isset($data['finish'])){
+        if (isset($data['finish'])) {
             $countSubjects = DB::table('subjects')->count();
-            if($data['finish'] == 1){
+            if ($data['finish'] == 1) {
                 $students = $this->model->has('subjects', $countSubjects);
             }
-            if($data['finish'] == 2){
+            if ($data['finish'] == 2) {
                 //$students = $this->model->withCount('subjects')->having('subjects_count', '<', $countSubjects)->get();
                 $students = $this->model->has('subjects', '<>', $countSubjects);
             }
@@ -92,5 +92,20 @@ class StudentRepository extends EloquentRepository
         }
         return $students->get();
 
+    }
+
+    public function studentToSendEmail()
+    {
+        $countSubjects = DB::table('subjects')->count();
+        $countStudent = $this->model->has('subjects', $countSubjects)->get();
+        $students = [];
+        foreach ($countStudent as $st){
+            $avgMark = $st->results->avg('mark');
+            if($avgMark < 5){
+                $students[] = $st;
+            }
+        }
+        //dd($students);
+        return $students;
     }
 }

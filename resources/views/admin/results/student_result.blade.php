@@ -11,7 +11,9 @@
             </h1>
         </div>
 
-        <button type="button" style="margin-bottom: 2%" class="btn btn-success" onclick="location.href='{{route('results.addResult', $id)}}'">+ Add mark</button>
+        <div class="col-sm-2">
+            <button type="button" style="margin-bottom: 20px;" class="btn btn-success" onclick="location.href='{{route('results.addResult', $id)}}'">+ Add mark</button>
+        </div>
 
         <!-- /.col-lg-12 -->
         <table class="table table-striped table-bordered table-hover">

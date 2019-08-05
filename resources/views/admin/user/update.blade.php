@@ -13,7 +13,7 @@
                 {!! Form::open(['method'=>'PUT', 'route'=>['users.update', 'user'=>$user]]) !!}
                 <div class="form-group">
                     {!! Form::label('User Name') !!}
-                    {!! Form::text('name', $user->name, ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
+                    {!! Form::text('username', $user->username, ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Level') !!}

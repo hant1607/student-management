@@ -42,7 +42,7 @@ abstract class EloquentRepository
      */
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->paginate(10);
     }
 
     /**

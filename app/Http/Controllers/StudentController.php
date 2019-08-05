@@ -10,6 +10,7 @@ use App\Repositories\SubjectRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\SendEmailJob;
 
 
 class StudentController extends Controller
@@ -38,7 +39,7 @@ class StudentController extends Controller
         $subjects = $this->subjectRepository->getAll();
         $sj = $subjects->pluck('name', 'id')->all();
 
-        return view('admin.students.list', ['students' => $students, 'subjects'=>$subjects, 'sj'=>$sj]);
+        return view('admin.students.list', ['students' => $students, 'subjects' => $subjects, 'sj' => $sj]);
     }
 
     /**
@@ -123,5 +124,13 @@ class StudentController extends Controller
         $this->studentRepository->delete($id);
         return redirect(route('students.index'))->with('noti', 'Delete successful');
     }
-
+    public function sendEmail(){
+        $students = $this->studentRepository->studentToSendEmail();
+        $subjects = $this->subjectRepository->getAll();
+        $sj = $subjects->pluck('name', 'id')->all();
+        foreach ($students as $student){
+            $this->dispatch(new SendEmailJob($student));
+        }
+        return view('admin.students.list', ['students' => $students, 'subjects' => $subjects, 'sj' => $sj]);
+    }
 }

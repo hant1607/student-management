@@ -24,11 +24,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $arr_validate = [
-            'name'=>'required',
+            'username'=>'required',
             'level'=>'required',
             'email'=>'required|email',
-            'phone'=>'required|unique|numeric',
-            'password'=>'required|min:4|max:10',
+            'password'=>'required|min:4',
             'passwordAgain'=>'required|same:password'
         ];
         return $arr_validate;

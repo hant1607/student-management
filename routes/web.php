@@ -42,6 +42,7 @@ Route::group(['prefix'=>'admin'], function (){
         Route::get('delete/{class}', 'ClassController@getDelete')->name('class.delete');
     }) ;
 
+    Route::post('students/sendEmail', 'StudentController@sendEmail')->name('students.sendEmail');
     Route::resource('students', 'StudentController');
     Route::resource('results', 'ResultController');
 

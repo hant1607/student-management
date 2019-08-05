@@ -14,7 +14,7 @@
                 {!! Form::open(['method'=>'POST', 'route'=>'users.store']) !!}
                 <div class="form-group">
                     {!! Form::label('User Name') !!}
-                    {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
+                    {!! Form::text('username', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Level') !!}

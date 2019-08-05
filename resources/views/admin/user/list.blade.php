@@ -25,7 +25,7 @@
                 @foreach($users as $user)
                     <tr class="even gradeC" align="center">
                         <td>{{$user->id}}</td>
-                        <td>{{$user->name}}</td>
+                        <td>{{$user->username}}</td>
                         <td>
                             @if($user->level == 1)
                                 {{"Admin"}}
