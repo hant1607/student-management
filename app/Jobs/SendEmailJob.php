@@ -36,9 +36,9 @@ class SendEmailJob implements ShouldQueue
             'name'=>$this->student->name,
             'email'=>$this->student->user->email,
         );
-        Mail::send('admin.students.bad_students',$data, function ($message) use ($data){
+        Mail::send('admin.emails.bad_students',$data, function ($message) use ($data){
            $message->from('nguyenha98nq@gmail.com', 'Admin');
-           $message->to($data['email'])->subject('Dear '.$data['name'].' warning email');
+           $message->to($data['email'])->subject('Warning email');
         });
     }
 }
