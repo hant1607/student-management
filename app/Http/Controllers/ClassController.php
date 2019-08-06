@@ -6,14 +6,17 @@ use App\Http\Requests\ClassRequest;
 use App\Models\Faculty;
 use App\Models\ClassModel;
 use App\Repositories\ClassRepository;
+use App\Repositories\FacultyRepository;
 
 class ClassController extends Controller
 {
     protected $classRepository;
+    protected $facultyRepository;
 
-    public function __construct(ClassRepository $classRepository)
+    public function __construct(ClassRepository $classRepository, FacultyRepository $facultyRepository)
     {
         $this->classRepository = $classRepository;
+        $this->facultyRepository = $facultyRepository;
     }
 
     public function getList()
@@ -25,8 +28,9 @@ class ClassController extends Controller
 
     public function getAdd()
     {
-        $faculty = Faculty::all();
-        return view('admin.classes.add', ['facultyData' => $faculty]);
+        $faculties = $this->facultyRepository->getAll();
+        $faculty = $faculties->pluck('name', 'id')->all();
+        return view('admin.classes.add', ['faculty' => $faculty]);
     }
 
     public function postAdd(ClassRequest $request)
@@ -37,8 +41,9 @@ class ClassController extends Controller
 
     public function getUpdate(ClassModel $class)
     {
-        $faculty = Faculty::all();
-        return view('admin.classes.update', ['classData' => $class], ['facultyData' => $faculty]);
+        $faculties = $this->facultyRepository->getAll();
+        $faculty = $faculties->pluck('name', 'id')->all();
+        return view('admin.classes.update', ['classData' => $class], ['faculty' => $faculty]);
     }
 
     public function postUpdate(ClassRequest $request, $id)

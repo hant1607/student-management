@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Result;
-use Illuminate\Support\Facades\DB;
 
 class ResultRepository extends EloquentRepository
 {

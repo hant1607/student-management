@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassModel;
 use App\Http\Requests\StudentRequest;
+use App\Repositories\ClassRepository;
 use App\Repositories\StudentRepository;
 use App\Models\Student;
 use App\Repositories\SubjectRepository;
@@ -18,14 +18,17 @@ class StudentController extends Controller
     protected $studentRepository;
     protected $subjectRepository;
     protected $userRepository;
+    protected $classRepository;
 
     public function __construct(StudentRepository $studentRepository,
                                 SubjectRepository $subjectRepository,
-                                UserRepository $userRepository)
+                                UserRepository $userRepository,
+                                ClassRepository $classRepository)
     {
         $this->studentRepository = $studentRepository;
         $this->subjectRepository = $subjectRepository;
         $this->userRepository = $userRepository;
+        $this->classRepository = $classRepository;
     }
 
     /**
@@ -38,8 +41,7 @@ class StudentController extends Controller
         $students = $this->studentRepository->search($request->all());
         $subjects = $this->subjectRepository->getAll();
         $sj = $subjects->pluck('name', 'id')->all();
-
-        return view('admin.students.list', ['students' => $students, 'subjects' => $subjects, 'sj' => $sj]);
+        return view('admin.students.list', ['students' => $students, 'sj' => $sj]);
     }
 
     /**
@@ -49,8 +51,9 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $classes = ClassModel::all();
-        return view('admin.students.add', ['classes' => $classes]);
+        $classes = $this->classRepository->getAll();
+        $class = $classes->pluck('name', 'id')->all();
+        return view('admin.students.add', ['class' => $class]);
     }
 
     /**
@@ -95,8 +98,9 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $class = ClassModel::all();
-        return view('admin.students.update', ['student' => $student, 'classes' => $class]);
+        $classes = $this->classRepository->getAll();
+        $class = $classes->pluck('name', 'id')->all();
+        return view('admin.students.update', ['student' => $student, 'class' => $class]);
     }
 
     /**
@@ -124,13 +128,15 @@ class StudentController extends Controller
         $this->studentRepository->delete($id);
         return redirect(route('students.index'))->with('noti', 'Delete successful');
     }
-    public function sendEmail(){
+
+    public function sendEmail()
+    {
         $students = $this->studentRepository->studentToSendEmail();
         $subjects = $this->subjectRepository->getAll();
         $sj = $subjects->pluck('name', 'id')->all();
-        foreach ($students as $student){
+        foreach ($students as $student) {
             $this->dispatch(new SendEmailJob($student));
         }
-        return view('admin.students.list', ['students' => $students, 'subjects' => $subjects, 'sj' => $sj]);
+        return view('admin.students.list', ['students' => $students, 'sj' => $sj]);
     }
 }

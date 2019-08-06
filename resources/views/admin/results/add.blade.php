@@ -14,21 +14,11 @@
                 {!! Form::open(['method'=>'POST', 'route'=>'results.store']) !!}
                 <div class="form-group">
                     {!! Form::label('Student Name') !!}
-                    <select class="form-control" name="student_id">
-                        <option value="">Please choose student</option>
-                        @foreach($students as $student)
-                            <option value="{{$student->id}}">{{$student->name}}</option>
-                        @endforeach
-                    </select>
+                    {!! Form::select('student_id', [''=>'Please choose student']+$student, old('student_id'), ['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Subject') !!}
-                    <select class="form-control" name="subject_id">
-                        <option value="">Please choose subject</option>
-                        @foreach($subjects as $subject)
-                            <option value="{{$subject->id}}">{{$subject->name}}</option>
-                        @endforeach
-                    </select>
+                    {!! Form::select('subject_id', [''=>'Please choose subject']+$subject, old('subject_id'), ['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Mark') !!}

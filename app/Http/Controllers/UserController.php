@@ -102,9 +102,9 @@ class UserController extends Controller
     }
 
     public function postLogin(LoginRequest $request){
-//        if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
-//            return redirect(route('students.index'));
-//        }
-//        else redirect()->back()->with('noti', 'Can not to login');
+        if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
+            return redirect(route('students.index'));
+        }
+        else redirect()->back()->with('noti', 'Can not to login');
     }
 }

@@ -18,14 +18,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Faculty') !!}
-                    <select class="form-control" name="faculty_id">
-                        @if($classData->faculty)
-                            <option value="{{$classData->faculty_id}}">{{$classData->faculty->name}}</option>
-                        @endif
-                        @foreach($facultyData as $value)
-                            <option value="{{$value->id}}">{{$value->name}}</option>
-                        @endforeach
-                    </select>
+                    {!! Form::select('faculty_id', $faculty, $classData->faculty_id, ['class'=>'form-control']) !!}
                 </div>
 
                 {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}

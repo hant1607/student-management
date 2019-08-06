@@ -25,12 +25,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Class') !!}
-                    <select class="form-control" name="class_id">
-                        <option value="">Please choose class</option>
-                        @foreach($classes as $class)
-                            <option value="{{$class->id}}">{{$class->name}}</option>
-                        @endforeach
-                    </select>
+                    {!! Form::select('class_id', ['' => 'Please choose faculty'] + $class, old('class_id'), ['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Birthday') !!}
@@ -38,10 +33,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Gender') !!}
-                    <select class="form-control" name="gender" value="{{old('gender')}}">
-                        <option value="Nam">Nam</option>
-                        <option value="Nu">Nu</option>
-                    </select>
+                    {!! Form::select('gender', ['Nam' => 'Nam', 'Nu'=>'Nu'],old('gender'), ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Phone') !!}

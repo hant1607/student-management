@@ -18,14 +18,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Class') !!}
-                    <select class="form-control" name="class_id">
-                        @if($student->class)
-                            <option value="{{$student->class_id}}">{{$student->class->name}}</option>
-                        @endif
-                        @foreach($classes as $class)
-                            <option value="{{$class->id}}">{{$class->name}}</option>
-                        @endforeach
-                    </select>
+                    {!! Form::select('class_id', $class, $student->class_id, ['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Birthday') !!}
@@ -33,11 +26,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Gender') !!}
-                    <select class="form-control" name="gender">
-                        <option value="{{$student->gender}}">{{$student->gender}}</option>
-                        <option value="Nam">Nam</option>
-                        <option value="Nu">Nu</option>
-                    </select>
+                    {!! Form::select('gender', ['Nam' => 'Nam', 'Nu'=>'Nu'],$student->gender, ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Phone') !!}

@@ -10,7 +10,6 @@ use App\Models\Subject;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
-use App\Jobs\SendEmailJob;
 
 class ResultController extends Controller
 {
@@ -18,7 +17,9 @@ class ResultController extends Controller
     protected $studentRepository;
     protected $subjectRepository;
 
-    public function __construct(ResultRepository $resultRepository, StudentRepository $studentRepository, SubjectRepository $subjectRepository)
+    public function __construct(ResultRepository $resultRepository,
+                                StudentRepository $studentRepository,
+                                SubjectRepository $subjectRepository)
     {
         $this->resultRepository = $resultRepository;
         $this->studentRepository = $studentRepository;
@@ -44,9 +45,11 @@ class ResultController extends Controller
      */
     public function create()
     {
-        $subjects = Subject::all();
-        $students = Student::all();
-        return view('admin.results.add', ['students' => $students, 'subjects' => $subjects]);
+        $subjects = $this->subjectRepository->getAll();
+        $subject = $subjects->pluck('name', 'id')->all();
+        $students = $this->studentRepository->getAll();
+        $student = $students->pluck('name', 'id')->all();
+        return view('admin.results.add', ['student' => $student, 'subject' => $subject]);
     }
 
     /**
@@ -81,8 +84,10 @@ class ResultController extends Controller
     public function edit(Result $result)
     {
         $subjects = $this->subjectRepository->getAll();
+        $subject = $subjects->pluck('name', 'id')->all();
         $students = $this->studentRepository->getAll();
-        return view('admin.results.update', ['result' => $result, 'subjects' => $subjects, 'students' => $students]);
+        $student = $students->pluck('name', 'id')->all();
+        return view('admin.results.update', ['result' => $result, 'subject' => $subject, 'student' => $student]);
     }
 
     /**
