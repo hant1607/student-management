@@ -13,11 +13,11 @@
                 {!! Form::open(['method'=>'PUT', 'route'=>['results.update', 'result'=>$result]]) !!}
                 <div class="form-group">
                     {!! Form::label('Student Name') !!}
-                    {!! Form::select('student_id', [''=>'Please choose student']+$student, $result->student_id, ['class'=>'form-control']) !!}
+                    {!! Form::select('student_id', $student, $result->student_id, ['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Subject') !!}
-                    {!! Form::select('subject_id', [''=>'Please choose subject']+$subject, $result->subject_id, ['class'=>'form-control']) !!}
+                    {!! Form::select('subject_id', $subject, $result->subject_id, ['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Mark') !!}

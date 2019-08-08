@@ -60,7 +60,7 @@
             {!! Form::close() !!}
             {!! Form::open(['method'=>'post', 'route'=>'students.sendEmail']) !!}
             <div class="col-sm-2" style="float:right; margin-bottom: 2%">
-                <button  class="btn btn-danger">Send warning email</button>
+                <button class="btn btn-danger">Send warning email</button>
             </div>
             {!! Form::close() !!}
 
@@ -69,7 +69,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-{{--                    <th>User Name</th>--}}
+                    <th>User Name</th>
                     <th>Class</th>
                     <th>Birthday</th>
                     <th>Gender</th>
@@ -85,12 +85,16 @@
                     <tr class="even gradeC" align="center">
                         <td>{{$student->id}}</td>
                         <td>{{$student->name}}</td>
-{{--                        <td>{{$student->user->username}}</td>--}}
-                        @if(empty($student->class_id))
-                            <td>{{''}}</td>
-                        @else
-                            <td>{{$student->class->name}}
-                        @endif
+                        <td>
+                            @if(!empty($student->user_id))
+                                {{$student->user->username}}
+                            @endif
+                        </td>
+                        <td>
+                            @if(!empty($student->class_id))
+                                {{$student->class->name}}
+                            @endif
+                        </td>
                         <td>{{$student->birthday}}</td>
                         <td>{{$student->gender}}</td>
                         <td>{{$student->phone}}</td>
@@ -114,6 +118,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {!! $students->links() !!}
         </div>
         <!-- /.row -->
     </div>

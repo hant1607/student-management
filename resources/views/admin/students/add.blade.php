@@ -53,7 +53,7 @@
                 <div class="form-group">
                     {!! Form::label('Level') !!}
                     {!! Form::radio('level', '1', ['class' => 'radio-inline']) !!} Admin
-                    {!! Form::radio('level', '2', ['class' => 'radio-inline']) !!} Member
+                    {!! Form::radio('level', '0', ['class' => 'radio-inline']) !!} Member
                 </div>
                 <div class="form-group">
                     {!! Form::label('Email') !!}
@@ -64,8 +64,8 @@
                     {!! Form::password('password', ['class'=>'form-control', 'placeholder' => 'Please enter password']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Re-enter Password') !!}
-                    {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}
+                    {!! Form::label('Confirm Password') !!}
+                    {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please enter confirm password']) !!}
                 </div>
                 {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}

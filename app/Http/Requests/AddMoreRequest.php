@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassRequest extends FormRequest
+class AddMoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,20 +23,19 @@ class ClassRequest extends FormRequest
      */
     public function rules()
     {
-        $arr_validate = [
-            'name' =>'required|unique:classes,name',
-            'faculty_id' => 'required'
+        return [
+            'subject_id.*' => 'required',
+            'mark.*' => 'required|numeric|between:0,10'
         ];
-        if($this->class) {
-            $arr_validate['name'] = 'required|unique:classes,name,'.$this->class;
-        }
-        return $arr_validate;
     }
+
     public function messages()
     {
         return [
-          'name.required'=>'Please enter class name',
-          'faculty_id.required'=>'Please choose faculty'
+            'subject_id.*.required' => 'The subject field is required',
+            'mark.*.required' => 'The mark field is required',
+            'mark.*.numeric' => 'The mark field must be number',
+            'mark.*.between'=>'The mark field must be between 0 to 10'
         ];
     }
 }

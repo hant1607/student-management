@@ -23,7 +23,6 @@ class ResultRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'subject_id'=>'required',
             'student_id'=>'required',

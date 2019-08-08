@@ -52,7 +52,8 @@
                             </select>
                         </div>
                         <div class="col-sm-5">
-                            {!! Form::text('mark[]', old('mark'), ['class'=>'form-control', 'placeholder'=>'Please enter mark']) !!}
+                            <input type="text" class="form-control" name="mark[]" style="margin-bottom: 15px"
+                                   value="{{old('mark')}}">
                         </div>
                         <div class="col-sm-2">
                             <button type="button" class="btn btn-danger btnRemove">-</button>

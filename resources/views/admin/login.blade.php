@@ -33,29 +33,34 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    @if(count($errors) > 0)
-                        <div class="alert alert-danger">
-                            @foreach($errors->all() as $err)
-                                {{$err}}<br>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if(session('noti'))
-                            {{session('noti')}}
-                    @endif
                     {!! Form::open(['method'=>'POST', 'route'=>'admin.login', 'role'=>'form']) !!}
-                        <fieldset>
-                            <div class="form-group">
-                                {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>'Email', 'autofocus'=>'autofocus']) !!}
-                            </div>
-                            <div class="form-group">
-                                {!! Form::password('password', ['class'=>'form-control', 'placeholder' => 'Password']) !!}
-                            </div>
-                            {!! Form::submit('Login', ['class'=>'btn btn-lg btn-success btn-block']) !!}
-                        </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>'Email', 'autofocus'=>'autofocus']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::password('password', ['class'=>'form-control', 'placeholder' => 'Password']) !!}
+                        </div>
+                        {!! Form::submit('Login', ['class'=>'btn btn-lg btn-success btn-block']) !!}
+                    </fieldset>
                     {!! Form::close() !!}
                 </div>
             </div>
+
+                @if(count($errors) > 0)
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $err)
+                            {{$err}}<br>
+                        @endforeach
+                    </div>
+                @endif
+                @if(session('noti'))
+                    <div class="alert alert-danger">
+                    {{session('noti')}}
+
+                    </div>
+                @endif
+
         </div>
     </div>
 </div>

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddMoreRequest;
 use App\Http\Requests\ResultRequest;
 use App\Repositories\ResultRepository;
 use App\Models\Result;
-use App\Models\Student;
-use App\Models\Subject;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
@@ -118,11 +117,12 @@ class ResultController extends Controller
     public function getAddStudentResult($id)
     {
         $subjects = $this->subjectRepository->getAll();
+        $subject = $subjects->pluck('name', 'id')->all();
         $results = $this->studentRepository->getOne($id);
         return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
     }
 
-    public function postStudentResult(Request $request, $id)
+    public function postStudentResult(AddMoreRequest $request, $id)
     {
         if (!empty($request->subject_id)) {
             $results = $this->studentRepository->find($id);

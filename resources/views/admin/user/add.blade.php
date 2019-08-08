@@ -30,8 +30,8 @@
                     {!! Form::password('password', ['class'=>'form-control', 'placeholder' => 'Please enter password']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Re-enter Password') !!}
-                    {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}
+                    {!! Form::label('Confirm Password') !!}
+                    {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please enter confirm password']) !!}
                 </div>
                 {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}

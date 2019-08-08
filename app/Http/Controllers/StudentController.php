@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StudentRequest;
 use App\Repositories\ClassRepository;
 use App\Repositories\StudentRepository;
@@ -9,6 +10,7 @@ use App\Models\Student;
 use App\Repositories\SubjectRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendEmailJob;
 
@@ -25,6 +27,7 @@ class StudentController extends Controller
                                 UserRepository $userRepository,
                                 ClassRepository $classRepository)
     {
+        parent::__construct();
         $this->studentRepository = $studentRepository;
         $this->subjectRepository = $subjectRepository;
         $this->userRepository = $userRepository;
@@ -62,7 +65,7 @@ class StudentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StudentRequest $request)
+    public function store(RegisterRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -138,5 +141,6 @@ class StudentController extends Controller
             $this->dispatch(new SendEmailJob($student));
         }
         return view('admin.students.list', ['students' => $students, 'sj' => $sj]);
+        //return redirect()->back()->with('noti', 'Send mail successful');
     }
 }

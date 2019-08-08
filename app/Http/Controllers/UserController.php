@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use \Auth;
 
-class UserController extends Controller
+class UserController extends LoginController
 {
     protected $userRepository;
 
@@ -102,9 +103,20 @@ class UserController extends Controller
     }
 
     public function postLogin(LoginRequest $request){
-        if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password])){
-            return redirect(route('students.index'));
+
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
         }
-        else redirect()->back()->with('noti', 'Can not to login');
+
+
+        $data = [
+            'email'=>$request->email,
+            'password'=>$request->password
+        ];
+//        if(Auth::attempt($data)){
+//            return redirect(route('students.index'));
+//        }
+
+        return redirect()->back()->with('noti', 'Can not to login. Your email or password is not correct');
     }
 }

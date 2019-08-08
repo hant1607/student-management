@@ -39,13 +39,13 @@
                 <div class="form-group">
                     {!! Form::label('Password') !!}
 {{--                    {!! Form::password('password', $user->password, ['class'=>'form-control', 'placeholder' => 'Please enter password']) !!}--}}
-                    <input class="form-control" type="password" name="password" placeholder="Please enter password" placeholder="Please re-enter password" value="{{$user->password}}">
+                    <input class="form-control" type="password" name="password" placeholder="Please enter password" value="{{$user->password}}">
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Re-enter Password') !!}
+                    {!! Form::label('Confirm Password') !!}
 {{--                    {!! Form::password('passwordAgain',$user->password, ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}--}}
                     <input class="form-control" type="password" name="passwordAgain"
-                           placeholder="Please re-enter password" value="{{$user->password}}">
+                           placeholder="Please enter confirm password" value="{{$user->password}}">
                 </div>
                 {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}
                 {!! Form::close() !!}

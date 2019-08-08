@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix'=>'admin'], function (){
+Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function (){
    Route::group(['prefix'=>'faculty'], function(){
        Route::get('list', 'FacultyController@getList')->name('faculty.index');
 
@@ -54,5 +54,10 @@ Route::group(['prefix'=>'admin'], function (){
     Route::post('results/students/{id}', 'ResultController@postStudentResult')->name('results.storeResults');
 });
 
-Route::get('admin/login', 'UserController@getLogin')->name('admin.login.index');
-Route::post('admin/login', 'UserController@postLogin')->name('admin.login');
+//Route::get('admin/login', 'UserController@getLogin')->name('admin.login.index');
+//Route::post('admin/login', 'UserController@postLogin')->name('admin.login');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

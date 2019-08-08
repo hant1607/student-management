@@ -24,10 +24,10 @@ class SubjectRequest extends FormRequest
     public function rules()
     {
         $arr_validate = [
-            'name' =>'required'
+            'name' =>'required|unique:subjects,name'
         ];
-        if(!$this->subject) {
-            $arr_validate['name'] = 'required|unique:subjects';
+        if($this->subject) {
+            $arr_validate['name'] = 'required|unique:subjects,name,'.$this->subject;
         }
         return $arr_validate;
     }

@@ -53,17 +53,22 @@ class StudentRepository extends EloquentRepository
     {
         $students = $this->model->select('*');
 
-        if (isset($data['min_age']) || isset($data['max_age'])) {
-            isset($data['min_age']) ? $minAge = Carbon::now()->subYears($data['min_age'])->lastOfYear()->format('Y-m-d') : $minAge = Carbon::now();
-            isset($data['max_age']) ? $maxAge = Carbon::now()->subYears($data['max_age'])->firstOfYear()->format('Y-m-d') : $maxAge = 0;
-
-            $students->whereBetween('birthday', [$maxAge, $minAge]);
+        if(isset($data['min_age'])){
+            $minYear = Carbon::now()->subYears($data['min_age']);
+            $students->where('birthday', '<', $minYear);
         }
-        if (isset($data['min_mark']) || isset($data['max_mark'])) {
+        if(isset($data['max_age'])){
+            $maxYear = Carbon::now()->subYears($data['max_age']);
+            $students->where('birthday', '>', $maxYear);
+        }
+        if(isset($data['min_mark'])){
             $students->whereHas('results', function ($query) use ($data) {
-                isset($data['min_mark']) ? $minMark = $data['min_mark'] : $minMark = 0;
-                isset($data['max_mark']) ? $maxMark = $data['max_mark'] : $maxMark = 10;
-                $query->whereBetween('mark', [$minMark, $maxMark]);
+                $query->where('mark', '>=', $data['min_mark']);
+            });
+        }
+        if(isset($data['max_mark'])){
+            $students->whereHas('results', function ($query) use ($data) {
+                $query->where('mark', '<=', $data['max_mark']);
             });
         }
         if (isset($data['subject_id'])) {
@@ -82,30 +87,35 @@ class StudentRepository extends EloquentRepository
         if (isset($data['finish'])) {
             $countSubjects = DB::table('subjects')->count();
             if ($data['finish'] == 1) {
-                $students = $this->model->has('subjects', $countSubjects);
+                $students->has('subjects', $countSubjects);
             }
             if ($data['finish'] == 2) {
                 //$students = $this->model->withCount('subjects')->having('subjects_count', '<', $countSubjects)->get();
-                $students = $this->model->has('subjects', '<>', $countSubjects);
+                $students->has('subjects', '<>', $countSubjects);
             }
-            return $students->get();
         }
-        return $students->get();
+        return $students->paginate(5);
 
     }
 
     public function studentToSendEmail()
     {
         $countSubjects = DB::table('subjects')->count();
-        $countStudent = $this->model->has('subjects', $countSubjects)->get();
-        $students = [];
-        foreach ($countStudent as $st){
-            $avgMark = $st->results->avg('mark');
-            if($avgMark < 5){
-                $students[] = $st;
-            }
-        }
-        //dd($students);
-        return $students;
+        $students = $this->model->has('subjects', $countSubjects)->whereHas('subjects', function ($query){
+          $query->havingRaw('AVG(mark) < 5');
+        });
+        //dd($students->get());
+//        $students = [];
+//        foreach ($countStudent as $st){
+//            $avgMark = $st->results->avg('mark');
+//            if($avgMark < 5){
+//                $students[] = $st;
+//            }
+//        }
+//        foreach ($countStudent as $st){
+//            $avgMark = $st->results->avg('mark');
+//        }
+//        $students = $countStudent->where($avgMark, '<', 5);
+        return $students->paginate(5);
     }
 }
