@@ -12,19 +12,27 @@
             {!! Form::open(['method'=>'GET', 'route'=>'students.index', 'class'=>'form-inline']) !!}
             <div class="sidebar-search" style="margin-bottom: 5%; display: block">
                 <div class="col-sm-4">
-                    {!! Form::label('From mark:') !!}
-                    {!! Form::text('min_mark',\Request::get('min_mark'), ['class'=>'form-control']) !!}
-                    {!! Form::label('From age:') !!}
-                    {!! Form::text('min_age',\Request::get('min_age'), ['class'=>'form-control','style' => 'margin-top:5%']) !!}
+                    <div>
+                        {!! Form::label('min_mark', "From mark:") !!}
+                        {!! Form::text('min_mark',\Request::get('min_mark'), ['class'=>'form-control']) !!}
+                    </div>
+                    <div style="margin-top: 5%">
+                        {!! Form::label('min_age',"From age:") !!}
+                        {!! Form::text('min_age',\Request::get('min_age'), ['class'=>'form-control']) !!}
+                    </div>
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('To mark:') !!}
-                    {!! Form::text('max_mark',\Request::get('max_mark'), ['class'=>'form-control']) !!}
-                    {!! Form::label('To age:') !!}
-                    {!! Form::text('max_age',\Request::get('max_age'), ['class'=>'form-control','style' => 'margin-top:5%']) !!}
+                    <div>
+                        {!! Form::label('max_mark', "To mark:") !!}
+                        {!! Form::text('max_mark',\Request::get('max_mark'), ['class'=>'form-control']) !!}
+                    </div>
+                    <div style="margin-top: 5%">
+                        {!! Form::label('max_age', "To age:") !!}
+                        {!! Form::text('max_age',\Request::get('max_age'), ['class'=>'form-control']) !!}
+                    </div>
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('Subject') !!}
+                    {!! Form::label('Subject:') !!}
                     {!! Form::select('subject_id', ['' => 'Subject'] + $sj,\Request::get('subject_id'), ['class'=>'form-control']) !!}
                     <span class="input-group-btn" style="float:right; margin-right: 25%">
                                     <button class="btn btn-default btn-primary" type="submit" name="btnSearch">

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use App\Models\User;
-use \Auth;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends LoginController
+class UserController extends Controller
 {
     protected $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
+        parent::__construct();
         $this->userRepository = $userRepository;
     }
 
@@ -96,27 +96,5 @@ class UserController extends LoginController
     {
         $this->userRepository->delete($id);
         return redirect(route('users.index'))->with('noti', 'Delete successful');
-    }
-
-    public function getLogin(){
-        return view('admin.login');
-    }
-
-    public function postLogin(LoginRequest $request){
-
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
-        }
-
-
-        $data = [
-            'email'=>$request->email,
-            'password'=>$request->password
-        ];
-//        if(Auth::attempt($data)){
-//            return redirect(route('students.index'));
-//        }
-
-        return redirect()->back()->with('noti', 'Can not to login. Your email or password is not correct');
     }
 }

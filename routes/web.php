@@ -49,15 +49,11 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function (){
     Route::resource('subjects', 'SubjectController');
     Route::resource('users', 'UserController');
 
-    Route::get('home', 'StudentController@index')->name('admin.home');
     Route::get('results/students/{id}', 'ResultController@getAddStudentResult')->name('results.addResult');
     Route::post('results/students/{id}', 'ResultController@postStudentResult')->name('results.storeResults');
 });
 
-//Route::get('admin/login', 'UserController@getLogin')->name('admin.login.index');
-//Route::post('admin/login', 'UserController@postLogin')->name('admin.login');
-
-
 Auth::routes();
+Route::get('auth/social/{social}', 'SocialAuthController@redirectToProvider')->name('social.login') ;
+Route::get('auth/{social}/callback', 'SocialAuthController@handleProviderCallback');
 
-Route::get('/home', 'HomeController@index')->name('home');

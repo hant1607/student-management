@@ -42,22 +42,20 @@
                     </div>
                 @endforeach
                 <div id="fieldAdd" class="field">
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <select class="form-group form-control" name="subject_id[]">
-                                <option value="">Please choose subject</option>
-                                @foreach($subjects as $subject)
-                                    <option value="{{$subject->id}}">{{$subject->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" name="mark[]" style="margin-bottom: 15px"
-                                   value="{{old('mark')}}">
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-danger btnRemove">-</button>
-                        </div>
+                    <div class="col-sm-5">
+                        <select class="form-group form-control" name="subject_id[]">
+                            <option value="">Please choose subject</option>
+                            @foreach($subjects as $subject)
+                                <option value="{{$subject->id}}">{{$subject->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="mark[]" style="margin-bottom: 15px"
+                               value="">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-danger btnRemove">-</button>
                     </div>
                 </div>
 

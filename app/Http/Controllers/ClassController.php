@@ -15,6 +15,7 @@ class ClassController extends Controller
 
     public function __construct(ClassRepository $classRepository, FacultyRepository $facultyRepository)
     {
+        parent::__construct();
         $this->classRepository = $classRepository;
         $this->facultyRepository = $facultyRepository;
     }

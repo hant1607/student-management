@@ -19,15 +19,15 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                 @if(isset($user_infor))
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> {{$user_infor}}</a>
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> {{$user_infor->username}}</a>
                     </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    <li><a href="{{route('users.edit', $user_infor->id)}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                @else
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Not have User</a>
+                    <li>{!! Form::open(['method'=>'POST', 'route'=>'logout']) !!}
+                        <i class="fa fa-sign-out fa-fw" style="margin-left: 20px"></i>
+                        {!! Form::submit('Logout', ['style'=> 'display: inline;border: none;background: none']) !!}
+                        {!! Form::close() !!}
                     </li>
                     @endif
             </ul>
@@ -52,7 +52,7 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a href="{{route('admin.home')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Faculties<span class="fa arrow"></span></a>

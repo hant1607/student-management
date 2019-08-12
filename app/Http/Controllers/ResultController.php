@@ -8,7 +8,6 @@ use App\Repositories\ResultRepository;
 use App\Models\Result;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
-use Illuminate\Http\Request;
 
 class ResultController extends Controller
 {
@@ -20,6 +19,7 @@ class ResultController extends Controller
                                 StudentRepository $studentRepository,
                                 SubjectRepository $subjectRepository)
     {
+        parent::__construct();
         $this->resultRepository = $resultRepository;
         $this->studentRepository = $studentRepository;
         $this->subjectRepository = $subjectRepository;

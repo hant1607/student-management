@@ -14,8 +14,13 @@ class Controller extends BaseController
 
     function __construct()
     {
-        if (Auth::check()) {
+        $this->middleware(function($request, $next)
+        {
+           if (Auth::check()) {
             view()->share('user_infor', Auth::user());
         }
+            return $next($request);
+        });
+
     }
 }

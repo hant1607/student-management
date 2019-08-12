@@ -14,6 +14,7 @@ class SubjectController extends Controller
 
     public function __construct(SubjectRepository $subjectRepository, ResultRepository $resultRepository)
     {
+        parent::__construct();
         $this->subjectRepository = $subjectRepository;
         $this->resultRepository = $resultRepository;
     }

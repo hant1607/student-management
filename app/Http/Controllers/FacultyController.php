@@ -12,6 +12,7 @@ class FacultyController extends Controller
 
     public function __construct(FacultyRepository $facultyRepository)
     {
+        parent::__construct();
         $this->facultyRepository = $facultyRepository;
     }
 
