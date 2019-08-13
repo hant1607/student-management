@@ -18,7 +18,7 @@
                     <label>Mark</label>
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-success btnPlus" style="margin-left: 7%; margin-bottom: 7%">+
+                    <button type="button" class="btn btn-success btnPlus" style="margin-bottom: 7%">+
                     </button>
                 </div>
 
@@ -37,25 +37,27 @@
                                    value="{{$result->mark}}">
                         </div>
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-danger btnRemove" style="margin-left: 7%">-</button>
+                            <button type="button" class="btn btn-danger btnRemove">-</button>
                         </div>
                     </div>
                 @endforeach
                 <div id="fieldAdd" class="field">
-                    <div class="col-sm-5">
-                        <select class="form-group form-control" name="subject_id[]">
-                            <option value="">Please choose subject</option>
-                            @foreach($subjects as $subject)
-                                <option value="{{$subject->id}}">{{$subject->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="mark[]" style="margin-bottom: 15px"
-                               value="">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-danger btnRemove">-</button>
+                    <div>
+                        <div class="col-sm-5">
+                            <select class="form-group form-control" name="subject_id[]">
+                                <option value="">Please choose subject</option>
+                                @foreach($subjects as $subject)
+                                    <option value="{{$subject->id}}">{{$subject->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="mark[]" style="margin-bottom: 15px"
+                                   value="">
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-danger btnRemove">-</button>
+                        </div>
                     </div>
                 </div>
 
@@ -82,6 +84,7 @@
                 var count = $('.field div').length;
                 if (count > 1) {
                     $(this).parent().parent().remove();
+
                     var $select = $("select");
                     var selected = [];
                     $.each($select, function (index, select) {

@@ -29,7 +29,7 @@
                         {!! Form::submit('Logout', ['style'=> 'display: inline;border: none;background: none']) !!}
                         {!! Form::close() !!}
                     </li>
-                    @endif
+                @endif
             </ul>
             <!-- /.dropdown-user -->
         </li>
