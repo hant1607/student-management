@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendEmailJob;
+use Illuminate\Support\Facades\Gate;
 
 
 class StudentController extends Controller
@@ -128,8 +129,11 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $this->studentRepository->delete($id);
-        return redirect(route('students.index'))->with('noti', 'Delete successful');
+        if(Gate::allows('can-delete', 'user')){
+            $this->studentRepository->delete($id);
+            return redirect(route('students.index'))->with('noti', 'Delete successful');
+        }
+        return redirect(route('students.index'))->with('noti', 'You are not admin. Can not delete');
     }
 
     public function sendEmail()

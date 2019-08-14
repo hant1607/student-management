@@ -7,6 +7,7 @@ use App\Models\Faculty;
 use App\Models\ClassModel;
 use App\Repositories\ClassRepository;
 use App\Repositories\FacultyRepository;
+use Illuminate\Support\Facades\Gate;
 
 class ClassController extends Controller
 {
@@ -55,7 +56,10 @@ class ClassController extends Controller
 
     public function getDelete($id)
     {
-        $this->classRepository->delete($id);
-        return redirect(route('class.index'))->with('noti', 'Delete successful');
+        if (Gate::allows('can-delete', 'user')) {
+            $this->classRepository->delete($id);
+            return redirect(route('class.index'))->with('noti', 'Delete successful');
+        }
+        return redirect(route('class.index'))->with('noti', 'You are not admin. Can not delete');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\SubjectRequest;
 use App\Models\Subject;
 use App\Repositories\ResultRepository;
 use App\Repositories\SubjectRepository;
+use Illuminate\Support\Facades\Gate;
 
 class SubjectController extends Controller
 {
@@ -95,7 +96,10 @@ class SubjectController extends Controller
      */
     public function destroy($id)
     {
-        $this->subjectRepository->delete($id);
-        return redirect(route('subjects.index'))->with('noti', 'Delete successful');
+        if(Gate::allows('can-delete', 'user')){
+            $this->subjectRepository->delete($id);
+            return redirect(route('subjects.index'))->with('noti', 'Delete successful');
+        }
+        return redirect(route('subjects.index'))->with('noti', 'You are not admin. Can not delete');
     }
 }

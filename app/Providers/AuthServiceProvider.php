@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use function foo\func;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,8 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('can-delete', function ($user){
-            return true;
+        Gate::define('can-delete', function (User $user){
+            if($user->level == 1){
+                return true;
+            }
         });
     }
 }

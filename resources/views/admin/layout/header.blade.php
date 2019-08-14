@@ -29,6 +29,11 @@
                         {!! Form::submit('Logout', ['style'=> 'display: inline;border: none;background: none']) !!}
                         {!! Form::close() !!}
                     </li>
+                    @else
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i>You are not logged in</a>
+                    </li>
+                    <li><a href="{{route('login')}}"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                    </li>
                 @endif
             </ul>
             <!-- /.dropdown-user -->

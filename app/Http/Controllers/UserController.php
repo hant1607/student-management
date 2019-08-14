@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -94,7 +95,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->userRepository->delete($id);
-        return redirect(route('users.index'))->with('noti', 'Delete successful');
+        if(Gate::allows('can-delete', 'user')){
+            $this->userRepository->delete($id);
+            return redirect(route('users.index'))->with('noti', 'Delete successful');
+        }
+        return redirect(route('users.index'))->with('noti', 'You are not admin. Can not delete');
     }
 }

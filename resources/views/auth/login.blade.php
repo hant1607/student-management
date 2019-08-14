@@ -69,6 +69,7 @@
                                             {{ __('Forgot Your Password?') }}
                                         </a>
                                     @endif
+                                    <button type="submit" class="btn btn-success" onclick="location.href ='{{route('students.create')}}'">Create account</button>
                                     <p style="margin-top: 3%; color: #0b97c4">Or using:</p>
                                     <div style="margin-top: 3%">
                                         <a href="{{route('social.login', 'facebook')}}"><img src="upload/facebook.png" style="width: 40px; height: 40px"></a>

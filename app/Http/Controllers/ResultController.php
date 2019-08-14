@@ -8,6 +8,7 @@ use App\Repositories\ResultRepository;
 use App\Models\Result;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
+use Illuminate\Support\Facades\Gate;
 
 class ResultController extends Controller
 {
@@ -110,14 +111,17 @@ class ResultController extends Controller
      */
     public function destroy($id)
     {
-        $this->resultRepository->delete($id);
-        return redirect(route('results.index'))->with('noti', 'Delete successful');
+        if(Gate::allows('can-delete', 'user')){
+            $this->resultRepository->delete($id);
+            return redirect(route('results.index'))->with('noti', 'Delete successful');
+        }
+        return redirect(route('results.index'))->with('noti', 'You are not admin. Can not delete');
     }
 
     public function getAddStudentResult($id)
     {
         $subjects = $this->subjectRepository->getAll();
-        $subject = $subjects->pluck('name', 'id')->all();
+        //$subject = $subjects->pluck('name', 'id')->all();
         $results = $this->studentRepository->getOne($id);
         return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
     }

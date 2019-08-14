@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StudentRequest;
 use App\Models\Result;
 use App\Models\Student;
@@ -28,7 +29,7 @@ class StudentRepository extends EloquentRepository
         $this->resultRepository = $result;
     }
 
-    public function uploadImage(StudentRequest $request)
+    public function uploadImage(RegisterRequest $request)
     {
         $data = $request->all();
         if ($request->hasFile('image')) {

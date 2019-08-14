@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FacultyRequest;
 use App\Repositories\FacultyRepository;
 use App\Models\Faculty;
+use Illuminate\Support\Facades\Gate;
+
 
 class FacultyController extends Controller
 {
@@ -47,7 +49,11 @@ class FacultyController extends Controller
 
     public function getDelete($id)
     {
-        $this->facultyRepository->delete($id);
-        return redirect(route('faculty.index'))->with('noti', 'Delete successful');
+        if(Gate::allows('can-delete', 'user')){
+            $this->facultyRepository->delete($id);
+            return redirect(route('faculty.index'))->with('noti', 'Delete successful');
+        }
+        return redirect(route('faculty.index'))->with('noti', 'You are not admin. Can not delete');
+
     }
 }
