@@ -35,16 +35,15 @@ class StudentRequest extends FormRequest
                 'username'=>'required',
                 'level'=>'required',
                 'email'=>'required|email',
-                'phone'=>'required|numeric',
                 'password'=>'required|min:4|max:10',
                 'passwordAgain'=>'required|same:password'
             ]);
         }
         if($this->student){
-            $arr_validate['phone'] = 'unique:students,phone,'.$this->student;
+            $arr_validate['phone'] = 'required|numeric|unique:students,phone,'.$this->student;
         }
         if($this->request->get('id')) {
-            $arr_validate['phone'] = 'required|unique:students,phone,'.$this->request->get('id');
+            $arr_validate['phone'] = 'required|numeric|unique:students,phone,'.$this->request->get('id');
         }
         return $arr_validate;
     }
