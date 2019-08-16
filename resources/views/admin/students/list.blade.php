@@ -90,26 +90,27 @@
                 </thead>
                 <tbody>
                 @foreach($students as $student)
-                    <tr class="even gradeC" align="center">
+                    <tr class="even gradeC" align="center" id="id_{{ $student->id }}">
                         <td>{{$student->id}}</td>
-                        <td>{{$student->name}}</td>
+                        <td class="name">{{$student->name}}</td>
                         <td>
                             @if(!empty($student->user_id))
                                 {{$student->user->username}}
                             @endif
                         </td>
-                        <td>
+                        <td class="class-name">
                             @if(!empty($student->class_id))
                                 {{$student->class->name}}
                             @endif
                         </td>
-                        <td>{{$student->birthday}}</td>
-                        <td>{{$student->gender}}</td>
-                        <td>{{$student->phone}}</td>
+                        <td class="birth-day">{{$student->birthday}}</td>
+                        <td class="gender">{{$student->gender}}</td>
+                        <td class="phone">{{$student->phone}}</td>
                         <td>
                             @if($student->image)
-                                <img width="100px" height="70px" src="upload/{{$student->image}}"></td>
-                        @endif
+                                <img class="image" width="100px" height="70px" src="upload/{{$student->image}}">
+                            @endif
+                        </td>
                         <td>
                             <button><a href="{{route('students.show', $student->id)}}">Mark</a></button>
                         </td>
@@ -139,14 +140,15 @@
                     <h4 class="modal-title" id="studentCrudModal"></h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" id="studentForm" name="studentForm" class="form-horizontal"
+                    <form id="studentForm" name="studentForm" class="form-horizontal"
                           enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
                             <label for="name" class="col-sm-4">Student Name</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name"
-                                       placeholder="Enter Student Name" value="" maxlength="50" required="">
+                                <input type="text" class="form-control" name="name" id="name"
+                                       placeholder="Enter Student Name" value="" maxlength="50">
+                                <span id="name-error"></span>
                             </div>
                         </div>
 
@@ -159,6 +161,7 @@
                                         <option value="{{$class->id}}">{{$class->name}}</option>
                                     @endforeach
                                 </select>
+                                <span id="class-error"></span>
                             </div>
                         </div>
 
@@ -166,8 +169,8 @@
                             <label for="birthday" class="col-sm-4">Birthday</label>
                             <div class="col-sm-12">
                                 <input type="date" class="form-control" id="birthday" name="birthday"
-                                       placeholder="Enter Birthday" value="" required="">
-
+                                       placeholder="Enter Birthday" value="">
+                                <span id="birthday-error"></span>
                             </div>
                         </div>
 
@@ -179,6 +182,7 @@
                                     <option value="Nam">Nam</option>
                                     <option value="Nu">Nu</option>
                                 </select>
+                                <span id="gender-error"></span>
                             </div>
                         </div>
 
@@ -186,22 +190,26 @@
                             <label for="phone" class="col-sm-4">Phone</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="phone" name="phone"
-                                       placeholder="Enter Phone" value="" required="">
+                                       placeholder="Enter Phone" value="">
+                                <span id="phone-error"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-4">Image</label>
                             <div class="col-sm-12">
-                                <input type="file" id="image" name="image" value="" required="">
+                                <input type="file" id="image" name="image">
                                 <img id="student_img" width="100px" height="70px" src="">
                             </div>
                         </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btn-cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save changes
+                            </button>
+                        </div>
+
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="btn-cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="btn-save" value="create">Save changes</button>
                 </div>
             </div>
         </div>
@@ -234,56 +242,55 @@
                     $('#birthday').val(data.birthday);
                     $('#gender').val(data.gender);
                     $('#phone').val(data.phone);
-                    $('img#student_img').attr('src',data.image);
+                    if(data.image){
+                        $('img#student_img').attr('src','upload/' + data.image);
+                    }
+
                 })
             });
         });
 
-        $(document).on("click", "#btn-save", function () {
-            $('#ajax-student-modal').modal('hide');
+        $(document).on("submit", "#studentForm", function (event) {
+            event.preventDefault();
+
+            //$('#ajax-student-modal').modal('hide');
 
             $('#btn-save').html('Sending..');
 
             $.ajax({
-                data: $('#studentForm').serialize(),
+                data: new FormData(this),
                 url: "admin/students/ajaxUpdate",
                 type: "POST",
-                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function (data) {
-                    var student = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.class_id + '</td><td>' + data.birthday + '</td><td>' + data.gender + '</td><td>' + data.phone + '</td><td>' + data.image + '</td>';
-                    student += '<td><a href="javascript:void(0)" id="edit-student" data-id="' + data.id + '" class="btn btn-info">Edit</a></td></tr>';
-
-                    $("#id_" + data.id).replaceWith(student);
+                    $("#id_" + data.id).find('.name').html(data.name);
+                    $("#id_" + data.id).find('.class-name').html(data.class_id);
+                    $("#id_" + data.id).find('.birth-day').html(data.birthday);
+                    $("#id_" + data.id).find('.gender').html(data.gender);
+                    $("#id_" + data.id).find('.phone').html(data.phone);
+                    if (data.image) {
+                        $("#id_" + data.id).find('.image').attr('src', 'upload/' + data.image);
+                    }
                     $('#studentForm').trigger("reset");
                     $('#ajax-student-modal').modal('hide');
                     $('#btn-save').html('Save Changes');
-
+                    $('.loading').hide();
                 },
                 error: function (data) {
-                    console.log('Error:', data);
-                    $('#btn-save').html('Save Changes');
+                    var errors = data.responseJSON.errors;
+                    if(errors) {
+                        $('#name-error').html(errors.name);
+                        $('#class-error').html(errors.class_id);
+                        $('#birthday-error').html(errors.birthday);
+                        $('#gender-error').html(errors.gender);
+                        $('#phone-error').html(errors.phone);
+                        $('#btn-save').html('Save Changes');
+                    }
                 }
             });
         });
 
-        // $(document).on("click", "#btn-save", function () {
-        //     var id = $(this).data('id');
-        //
-        //     var name = $('#name_' + id).val();
-        //     var class_id = $('#class_id_' + id).val();
-        //     var birthday = $('#birthday_' + id).val();
-        //     var gender = $('#gender_' + id).val();
-        //     var phone = $('#phone_' + id).val();
-        //     var image = $('#image_' + id).val();
-        //
-        //     $.ajax({
-        //         url: 'admin/students/update',
-        //         type: 'put',
-        //         data: {id: id, name: name, class_id: class_id, birthday: birthday, gender: gender, phone: phone, image:image},
-        //         success: function (response) {
-        //             alert(response);
-        //         }
-        //     });
-        // });
     </script>
 @endsection

@@ -27,6 +27,7 @@ class StudentRequest extends FormRequest
             'name'=>'required',
             'class_id'=>'required',
             'phone'=>'required|numeric|unique:students,phone',
+            'gender'=>'required',
             'birthday'=>'required|date-format:Y-m-d',
         ];
         if($this->request->has('username')) {
@@ -43,7 +44,7 @@ class StudentRequest extends FormRequest
             $arr_validate['phone'] = 'unique:students,phone,'.$this->student;
         }
         if($this->request->get('id')) {
-            $arr_validate['phone'] = 'unique:students,phone,'.$this->request->get('id');
+            $arr_validate['phone'] = 'required|unique:students,phone,'.$this->request->get('id');
         }
         return $arr_validate;
     }
@@ -53,7 +54,8 @@ class StudentRequest extends FormRequest
             'name.required'=>'Please enter name student!',
             'class_id.required'=>'Please choose class',
             'birthday.required'=>'Please enter birthday',
-            'birthday.date-format'=>'Enter birthday following form yyyy/mm/dd'
+            'birthday.date-format'=>'Enter birthday following form yyyy/mm/dd',
+            'gender.required' => 'Please enter gender'
         ];
     }
 

@@ -106,7 +106,6 @@ class StudentController extends Controller
 //        $class = $classes->pluck('name', 'id')->all();
 //        return view('admin.students.update', ['student' => $student, 'class' => $class]);
         $student = $this->studentRepository->find($id);
-        $student->image = "upload/" . $student->image;
         return Response::json($student);
     }
 
@@ -154,7 +153,17 @@ class StudentController extends Controller
     public function ajaxUpdate(StudentRequest $request)
     {
         $id = $request->id;
-        $data = $this->studentRepository->uploadImage($request);
+        $data = $request->all();
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $end = $file->getClientOriginalExtension();
+            if ($end != 'jpg' && $end != 'png' && $end != 'jpeg') {
+                return redirect()->back()->with('error', 'You have to enter image have .jpg or .png or .jpeg');
+            }
+            $name = $file->getClientOriginalName();
+            $file->move(public_path('upload'), $name);
+            $data['image'] = $name;
+        }
         $student = $this->studentRepository->update($id, $data);
         return Response::json($student);
     }
