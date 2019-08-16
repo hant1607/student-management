@@ -43,6 +43,9 @@ Route::group(['prefix'=>'admin', ['middleware' => ['auth' => ['except' => 'admin
     }) ;
 
     Route::post('students/sendEmail', 'StudentController@sendEmail')->name('students.sendEmail');
+
+    Route::post('students/ajaxUpdate', 'StudentController@ajaxUpdate')->name('students.ajaxUpdate');
+
     Route::resource('students', 'StudentController');
     Route::resource('results', 'ResultController');
 

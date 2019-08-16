@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StudentRequest;
 use App\Repositories\ClassRepository;
 use App\Repositories\StudentRepository;
@@ -10,10 +9,10 @@ use App\Models\Student;
 use App\Repositories\SubjectRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendEmailJob;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 
 class StudentController extends Controller
@@ -42,10 +41,11 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $students = $this->studentRepository->search($request->all());
+        $data['students'] = $this->studentRepository->search($request->all());
+        $classes = $this->classRepository->getAll();
         $subjects = $this->subjectRepository->getAll();
         $sj = $subjects->pluck('name', 'id')->all();
-        return view('admin.students.list', ['students' => $students, 'sj' => $sj]);
+        return view('admin.students.list', $data, ['sj' => $sj, 'classes' => $classes]);
     }
 
     /**
@@ -66,7 +66,7 @@ class StudentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegisterRequest $request)
+    public function store(StudentRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -100,11 +100,14 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        $classes = $this->classRepository->getAll();
-        $class = $classes->pluck('name', 'id')->all();
-        return view('admin.students.update', ['student' => $student, 'class' => $class]);
+//        $classes = $this->classRepository->getAll();
+//        $class = $classes->pluck('name', 'id')->all();
+//        return view('admin.students.update', ['student' => $student, 'class' => $class]);
+        $student = $this->studentRepository->find($id);
+        $student->image = "upload/" . $student->image;
+        return Response::json($student);
     }
 
     /**
@@ -129,7 +132,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        if(Gate::allows('can-delete', 'user')){
+        if (Gate::allows('can-delete', 'user')) {
             $this->studentRepository->delete($id);
             return redirect(route('students.index'))->with('noti', 'Delete successful');
         }
@@ -141,10 +144,18 @@ class StudentController extends Controller
         $students = $this->studentRepository->studentToSendEmail();
         $subjects = $this->subjectRepository->getAll();
         $sj = $subjects->pluck('name', 'id')->all();
+        $classes = $this->classRepository->getAll();
         foreach ($students as $student) {
             $this->dispatch(new SendEmailJob($student));
         }
-        return view('admin.students.list', ['students' => $students, 'sj' => $sj]);
-        //return redirect()->back()->with('noti', 'Send mail successful');
+        return view('admin.students.list', ['students' => $students, 'sj' => $sj, 'classes'=>$classes]);
+    }
+
+    public function ajaxUpdate(StudentRequest $request)
+    {
+        $id = $request->id;
+        $data = $this->studentRepository->uploadImage($request);
+        $student = $this->studentRepository->update($id, $data);
+        return Response::json($student);
     }
 }

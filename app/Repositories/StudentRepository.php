@@ -7,6 +7,7 @@ use App\Http\Requests\StudentRequest;
 use App\Models\Result;
 use App\Models\Student;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends EloquentRepository
@@ -29,7 +30,7 @@ class StudentRepository extends EloquentRepository
         $this->resultRepository = $result;
     }
 
-    public function uploadImage(RegisterRequest $request)
+    public function uploadImage(StudentRequest $request)
     {
         $data = $request->all();
         if ($request->hasFile('image')) {

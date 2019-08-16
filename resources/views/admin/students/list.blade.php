@@ -114,7 +114,9 @@
                             <button><a href="{{route('students.show', $student->id)}}">Mark</a></button>
                         </td>
                         <td class="center">
-                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>
+                            {{--                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>--}}
+                            <button><a href="javascript:void(0)" id="edit-student" data-id="{{ $student->id }}">Edit</a>
+                            </button>
                         </td>
                         <td class="center">
                             {!! Form::open(['method'=>'DELETE', 'route'=>['students.destroy', 'student'=>$student]]) !!}
@@ -128,7 +130,160 @@
             </table>
             {!! $students->links() !!}
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
+
+    <div class="modal fade" id="ajax-student-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="studentCrudModal"></h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="studentForm" name="studentForm" class="form-horizontal"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-4">Student Name</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="name" name="name"
+                                       placeholder="Enter Student Name" value="" maxlength="50" required="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4">Class</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" name="class_id" id="class_id">
+                                    <option value="">Choose class</option>
+                                    @foreach($classes as $class)
+                                        <option value="{{$class->id}}">{{$class->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-4">Birthday</label>
+                            <div class="col-sm-12">
+                                <input type="date" class="form-control" id="birthday" name="birthday"
+                                       placeholder="Enter Birthday" value="" required="">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4">Gender</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" name="gender" id="gender">
+                                    <option value="">Choose gender</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nu">Nu</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-4">Phone</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                       placeholder="Enter Phone" value="" required="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4">Image</label>
+                            <div class="col-sm-12">
+                                <input type="file" id="image" name="image" value="" required="">
+                                <img id="student_img" width="100px" height="70px" src="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btn-cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btn-save" value="create">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#btn-cancel').click(function () {
+                $('#ajax-student-modal').modal('hide');
+            });
+
+
+            $('body').on('click', '#edit-student', function () {
+                var id = $(this).data('id');
+                $.get('admin/students/' + id + '/edit', function (data) {
+                    $('#btn-save').val("edit-student");
+                    $('#studentCrudModal').html("Edit Student");
+                    $('#ajax-student-modal').modal('show');
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#class_id').val(data.class_id);
+                    $('#birthday').val(data.birthday);
+                    $('#gender').val(data.gender);
+                    $('#phone').val(data.phone);
+                    $('img#student_img').attr('src',data.image);
+                })
+            });
+        });
+
+        $(document).on("click", "#btn-save", function () {
+            $('#ajax-student-modal').modal('hide');
+
+            $('#btn-save').html('Sending..');
+
+            $.ajax({
+                data: $('#studentForm').serialize(),
+                url: "admin/students/ajaxUpdate",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    var student = '<tr id="id_' + data.id + '"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.class_id + '</td><td>' + data.birthday + '</td><td>' + data.gender + '</td><td>' + data.phone + '</td><td>' + data.image + '</td>';
+                    student += '<td><a href="javascript:void(0)" id="edit-student" data-id="' + data.id + '" class="btn btn-info">Edit</a></td></tr>';
+
+                    $("#id_" + data.id).replaceWith(student);
+                    $('#studentForm').trigger("reset");
+                    $('#ajax-student-modal').modal('hide');
+                    $('#btn-save').html('Save Changes');
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    $('#btn-save').html('Save Changes');
+                }
+            });
+        });
+
+        // $(document).on("click", "#btn-save", function () {
+        //     var id = $(this).data('id');
+        //
+        //     var name = $('#name_' + id).val();
+        //     var class_id = $('#class_id_' + id).val();
+        //     var birthday = $('#birthday_' + id).val();
+        //     var gender = $('#gender_' + id).val();
+        //     var phone = $('#phone_' + id).val();
+        //     var image = $('#image_' + id).val();
+        //
+        //     $.ajax({
+        //         url: 'admin/students/update',
+        //         type: 'put',
+        //         data: {id: id, name: name, class_id: class_id, birthday: birthday, gender: gender, phone: phone, image:image},
+        //         success: function (response) {
+        //             alert(response);
+        //         }
+        //     });
+        // });
+    </script>
 @endsection

@@ -29,8 +29,21 @@ class StudentRequest extends FormRequest
             'phone'=>'required|numeric|unique:students,phone',
             'birthday'=>'required|date-format:Y-m-d',
         ];
+        if($this->request->has('username')) {
+            $arr_validate = array_merge($arr_validate,[
+                'username'=>'required',
+                'level'=>'required',
+                'email'=>'required|email',
+                'phone'=>'required|numeric',
+                'password'=>'required|min:4|max:10',
+                'passwordAgain'=>'required|same:password'
+            ]);
+        }
         if($this->student){
             $arr_validate['phone'] = 'unique:students,phone,'.$this->student;
+        }
+        if($this->request->get('id')) {
+            $arr_validate['phone'] = 'unique:students,phone,'.$this->request->get('id');
         }
         return $arr_validate;
     }
@@ -43,4 +56,5 @@ class StudentRequest extends FormRequest
             'birthday.date-format'=>'Enter birthday following form yyyy/mm/dd'
         ];
     }
+
 }
