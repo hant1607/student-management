@@ -91,7 +91,7 @@ class StudentController extends Controller
     public function show($id)
     {
         $results = $this->studentRepository->getOne($id);
-        return view('admin.results.student_result', ['results' => $results, 'id' => $id]);
+        return view('admin.results.student_result', compact('results', 'id'));
     }
 
     /**
@@ -153,17 +153,7 @@ class StudentController extends Controller
     public function ajaxUpdate(StudentRequest $request)
     {
         $id = $request->id;
-        $data = $request->all();
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $end = $file->getClientOriginalExtension();
-            if ($end != 'jpg' && $end != 'png' && $end != 'jpeg') {
-                return redirect()->back()->with('error', 'You have to enter image have .jpg or .png or .jpeg');
-            }
-            $name = $file->getClientOriginalName();
-            $file->move(public_path('upload'), $name);
-            $data['image'] = $name;
-        }
+        $data = $this->studentRepository->uploadImage($request);
         $student = $this->studentRepository->update($id, $data);
         return Response::json($student);
     }
