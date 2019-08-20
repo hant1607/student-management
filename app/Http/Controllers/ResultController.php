@@ -115,7 +115,7 @@ class ResultController extends Controller
             $this->resultRepository->delete($id);
             return redirect(route('results.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('results.index'))->with('noti', 'You are not admin. Can not delete');
+        return redirect(route('results.index'))->with('noti','You are not admin. Can not delete');
     }
 
     public function getAddStudentResult($id)

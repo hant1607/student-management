@@ -147,7 +147,7 @@ class StudentController extends Controller
         foreach ($students as $student) {
             $this->dispatch(new SendEmailJob($student));
         }
-        return view('admin.students.list', ['students' => $students, 'sj' => $sj, 'classes'=>$classes]);
+        return view('admin.students.list', compact('students', 'sj', 'classes'));
     }
 
     public function ajaxUpdate(StudentRequest $request)

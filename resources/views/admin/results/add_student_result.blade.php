@@ -24,9 +24,7 @@
                 <div style="display: none" id="count-subject">{{count($subjects)}}</div>
                 {!! Form::open(['method'=>'POST', 'route'=>['results.storeResults', $id]]) !!}
                 <div id="form-body">
-                    @if((!empty(old('subject_id'))))
-
-                    @else
+                    @if(empty(old('subject_id')))
                         @foreach($results as $result)
                             <div class="field">
                                 <div class="col-sm-5">
@@ -90,7 +88,7 @@
         $(document).ready(function () {
             var add = $('#fieldAdd').html();
             $('.btnPlus').on('click', function () {
-                if (count < totalSubject) {
+                if (count <= totalSubject) {
                     $('#form-body').append(add);
                     count++;
                 } else {
@@ -101,6 +99,7 @@
         $(document).on('click', '.btnRemove', function () {
             $(this).parent().parent().remove();
             count--;
+
             var $select = $("select");
             var selected = [];
             $.each($select, function (index, select) {
@@ -138,23 +137,22 @@
         });
     </script>
 @endsection
-@section('addform')
-    <div id="fieldAdd" class="field" style="display: none">
-        <div>
-            <div class="col-sm-5">
-                <select class="form-group form-control" name="subject_id[]">
-                    <option value="">Please choose subject</option>
-                    @foreach($subjects as $subject)
-                        <option value="{{$subject->id}}">{{$subject->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="mark[]" value="" style="margin-bottom: 15px">
-            </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-danger btnRemove">-</button>
-            </div>
+
+<div id="fieldAdd" class="field" style="display: none">
+    <div>
+        <div class="col-sm-5">
+            <select class="form-group form-control" name="subject_id[]">
+                <option value="">Please choose subject</option>
+                @foreach($subjects as $subject)
+                    <option value="{{$subject->id}}">{{$subject->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="mark[]" value="" style="margin-bottom: 15px">
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-danger btnRemove">-</button>
         </div>
     </div>
-@endsection
+</div>
