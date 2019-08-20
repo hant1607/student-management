@@ -29,6 +29,7 @@ class StudentRequest extends FormRequest
             'phone'=>'required|numeric|unique:students,phone',
             'gender'=>'required',
             'birthday'=>'required|date-format:Y-m-d',
+            'image'=>'max:30000',
         ];
         if($this->request->has('username')) {
             $arr_validate = array_merge($arr_validate,[
@@ -54,7 +55,8 @@ class StudentRequest extends FormRequest
             'class_id.required'=>'Please choose class',
             'birthday.required'=>'Please enter birthday',
             'birthday.date-format'=>'Enter birthday following form yyyy/mm/dd',
-            'gender.required' => 'Please enter gender'
+            'gender.required' => 'Please enter gender',
+            'image.max'=>'The size of image must be under 30MB'
         ];
     }
 

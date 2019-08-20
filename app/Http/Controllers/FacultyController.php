@@ -53,7 +53,7 @@ class FacultyController extends Controller
             $this->facultyRepository->delete($id);
             return redirect(route('faculty.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('faculty.index'))->with('noti', 'You are not admin. Can not delete');
+        return redirect(route('faculty.index'))->with('error', 'You are not admin. Can not delete');
 
     }
 }

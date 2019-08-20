@@ -60,6 +60,6 @@ class ClassController extends Controller
             $this->classRepository->delete($id);
             return redirect(route('class.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('class.index'))->with('noti', 'You are not admin. Can not delete');
+        return redirect(route('class.index'))->with('error', 'You are not admin. Can not delete');
     }
 }

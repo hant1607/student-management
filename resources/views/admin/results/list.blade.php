@@ -18,7 +18,9 @@
                     <th>Subject</th>
                     <th>Mark</th>
                     <th>Edit</th>
-                    <th>Delete</th>
+                    @can('can-delete', 'user')
+                        <th>Delete</th>
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>
@@ -32,12 +34,14 @@
                             <button><a
                                         href="{{route('results.edit', ['result'=>$result])}}">Edit</a></button>
                         </td>
-                        <td class="center">
-                            {!! Form::open(['method'=>'DELETE', 'route'=>['results.destroy', 'result'=>$result]]) !!}
-                            <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
-                            </button>
-                            {!! Form::close() !!}
-                        </td>
+                        @can('can-delete', 'user')
+                            <td class="center">
+                                {!! Form::open(['method'=>'DELETE', 'route'=>['results.destroy', 'result'=>$result]]) !!}
+                                <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
+                                </button>
+                                {!! Form::close() !!}
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
                 </tbody>

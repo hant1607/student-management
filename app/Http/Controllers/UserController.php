@@ -99,6 +99,6 @@ class UserController extends Controller
             $this->userRepository->delete($id);
             return redirect(route('users.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('users.index'))->with('noti', 'You are not admin. Can not delete');
+        return redirect(route('users.index'))->with('error', 'You are not admin. Can not delete');
     }
 }

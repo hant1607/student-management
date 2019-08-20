@@ -16,7 +16,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//=> ['except' => 'admin/students/create']
+
 Route::group(['prefix'=>'admin', 'middleware' => ['auth'], ['except' => 'admin/students/create']], function (){
    Route::group(['prefix'=>'faculty'], function(){
        Route::get('list', 'FacultyController@getList')->name('faculty.index');

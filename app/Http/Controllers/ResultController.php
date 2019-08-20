@@ -115,15 +115,18 @@ class ResultController extends Controller
             $this->resultRepository->delete($id);
             return redirect(route('results.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('results.index'))->with('noti','You are not admin. Can not delete');
+        return redirect(route('results.index'))->with('error','You are not admin. Can not delete');
     }
 
     public function getAddStudentResult($id)
     {
-        $subjects = $this->subjectRepository->getAll();
-        //$subject = $subjects->pluck('name', 'id')->all();
-        $results = $this->studentRepository->getOne($id);
-        return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
+        if(Gate::allows('can-delete', 'user')){
+            $subjects = $this->subjectRepository->getAll();
+            //$subject = $subjects->pluck('name', 'id')->all();
+            $results = $this->studentRepository->getOne($id);
+            return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
+        }
+        return redirect()->back()->with('error', 'You are not admin. Can not edit mark');
     }
 
     public function postStudentResult(AddMoreRequest $request, $id)

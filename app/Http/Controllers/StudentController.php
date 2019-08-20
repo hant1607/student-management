@@ -135,7 +135,7 @@ class StudentController extends Controller
             $this->studentRepository->delete($id);
             return redirect(route('students.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('students.index'))->with('noti', 'You are not admin. Can not delete');
+        return redirect(route('students.index'))->with('error', 'You are not admin. Can not delete');
     }
 
     public function sendEmail()

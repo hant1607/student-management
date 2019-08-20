@@ -85,7 +85,9 @@
                     <th>Image</th>
                     <th>Result</th>
                     <th>Edit</th>
-                    <th>Delete</th>
+                    @can('can-delete', 'user')
+                        <th>Delete</th>
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>
@@ -119,12 +121,14 @@
                             <button><a href="javascript:void(0)" id="edit-student" data-id="{{ $student->id }}">Edit</a>
                             </button>
                         </td>
-                        <td class="center">
-                            {!! Form::open(['method'=>'DELETE', 'route'=>['students.destroy', 'student'=>$student]]) !!}
-                            <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
-                            </button>
-                            {!! Form::close() !!}
-                        </td>
+                        @can('can-delete', 'user')
+                            <td class="center">
+                                {!! Form::open(['method'=>'DELETE', 'route'=>['students.destroy', 'student'=>$student]]) !!}
+                                <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
+                                </button>
+                                {!! Form::close() !!}
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
                 </tbody>
@@ -200,6 +204,7 @@
                             <div class="col-sm-12">
                                 <input type="file" id="image" name="image">
                                 <img id="student_img" width="100px" height="70px" src="">
+                                <span id="image-error"></span>
                             </div>
                         </div>
 
@@ -242,8 +247,8 @@
                     $('#birthday').val(data.birthday);
                     $('#gender').val(data.gender);
                     $('#phone').val(data.phone);
-                    if(data.image){
-                        $('img#student_img').attr('src','upload/' + data.image);
+                    if (data.image) {
+                        $('img#student_img').attr('src', 'upload/' + data.image);
                     }
 
                 })
@@ -280,12 +285,13 @@
                 },
                 error: function (data) {
                     var errors = data.responseJSON.errors;
-                    if(errors) {
+                    if (errors) {
                         $('#name-error').html(errors.name);
                         $('#class-error').html(errors.class_id);
                         $('#birthday-error').html(errors.birthday);
                         $('#gender-error').html(errors.gender);
                         $('#phone-error').html(errors.phone);
+                        $('#image-error').html(errors.image);
                         $('#btn-save').html('Save Changes');
                     }
                 }

@@ -15,7 +15,9 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Edit</th>
-                    <th>Delete</th>
+                    @can('can-delete', 'user')
+                        <th>Delete</th>
+                    @endcan
                 </tr>
                 </thead>
 
@@ -24,10 +26,16 @@
                     <tr class="odd gradeX" align="center">
                         <td>{{$value->id}}</td>
                         <td>{{$value->name}}</td>
-                        <td class="center"><button><a href="{{route('faculty.update', ['faculty'=>$value ])}}">Edit</a></button></td>
-                        <td class="center"><button><a
-                                    onclick="return confirm('Do you want to delete this field?')"
-                                    href="{{route('faculty.delete', [$value->id])}}"> Delete</a></button></td>
+                        <td class="center">
+                            <button><a href="{{route('faculty.update', ['faculty'=>$value ])}}">Edit</a></button>
+                        </td>
+                        @can('can-delete', 'user')
+                            <td class="center">
+                                <button><a
+                                            onclick="return confirm('Do you want to delete this field?')"
+                                            href="{{route('faculty.delete', [$value->id])}}"> Delete</a></button>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
                 </tbody>

@@ -100,6 +100,6 @@ class SubjectController extends Controller
             $this->subjectRepository->delete($id);
             return redirect(route('subjects.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('subjects.index'))->with('noti', 'You are not admin. Can not delete');
+        return redirect(route('subjects.index'))->with('error', 'You are not admin. Can not delete');
     }
 }
