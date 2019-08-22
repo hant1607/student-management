@@ -50,6 +50,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth'], ['except' => 'admin/s
     Route::resource('results', 'ResultController');
 
     Route::resource('subjects', 'SubjectController');
+    Route::get('users/{user}/profile', 'UserController@getProfile')->name('users.profile');
+    Route::get('users/{user}/edit-profile', 'UserController@editProfile')->name('users.editProfile');
+    Route::post('users/update-profile', 'UserController@updateProfile')->name('users.updateProfile');
     Route::resource('users', 'UserController');
 
     Route::get('results/students/{id}', 'ResultController@getAddStudentResult')->name('results.addResult');

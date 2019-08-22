@@ -1,6 +1,5 @@
 @extends('admin.layout.index')
 @section('content')
-    <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -56,7 +55,5 @@
             </table>
             {{$users->links()}}
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
 @endsection

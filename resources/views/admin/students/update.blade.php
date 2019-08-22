@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Gender') !!}
-                    {!! Form::select('gender', ['Nam' => 'Nam', 'Nu'=>'Nu'],$student->gender, ['class' => 'form-control']) !!}
+                    {!! Form::select('gender', ['1' => 'Male', '2'=>'Female'],$student->gender, ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Phone') !!}

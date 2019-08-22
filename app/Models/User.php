@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($pass);
     }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
 }

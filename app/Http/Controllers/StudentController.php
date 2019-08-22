@@ -155,6 +155,12 @@ class StudentController extends Controller
         $id = $request->id;
         $data = $this->studentRepository->uploadImage($request);
         $student = $this->studentRepository->update($id, $data);
+        $student->class_id = $student->class->name;
+        if ($student->gender == 1){
+            $student->gender = 'Male';
+        }else{
+            $student->gender = 'Female';
+        }
         return Response::json($student);
     }
 }

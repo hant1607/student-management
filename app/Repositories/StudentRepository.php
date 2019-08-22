@@ -2,12 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\StudentRequest;
 use App\Models\Result;
 use App\Models\Student;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends EloquentRepository

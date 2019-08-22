@@ -106,7 +106,11 @@
                             @endif
                         </td>
                         <td class="birth-day">{{$student->birthday}}</td>
-                        <td class="gender">{{$student->gender}}</td>
+                        <td class="gender">@if($student->gender == 1)
+                                {{"Male"}}
+                            @else
+                                {{"Female"}}
+                            @endif</td>
                         <td class="phone">{{$student->phone}}</td>
                         <td>
                             @if($student->image)
@@ -117,7 +121,7 @@
                             <button><a href="{{route('students.show', $student->id)}}">Mark</a></button>
                         </td>
                         <td class="center">
-                            {{--                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>--}}
+{{--                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>--}}
                             <button><a href="javascript:void(0)" id="edit-student" data-id="{{ $student->id }}">Edit</a>
                             </button>
                         </td>
@@ -182,9 +186,8 @@
                             <label class="col-sm-4">Gender</label>
                             <div class="col-sm-12">
                                 <select class="form-control" name="gender" id="gender">
-                                    <option value="">Choose gender</option>
-                                    <option value="Nam">Nam</option>
-                                    <option value="Nu">Nu</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
                                 </select>
                                 <span id="gender-error"></span>
                             </div>

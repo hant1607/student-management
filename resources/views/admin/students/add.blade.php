@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('Gender') !!}
-                    {!! Form::select('gender', ['Nam' => 'Nam', 'Nu'=>'Nu'],old('gender'), ['class' => 'form-control']) !!}
+                    {!! Form::select('gender', ['' => 'Please choose gender']+['1' => 'Male', '2'=>'Female'], old('gender'), ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('Phone') !!}

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -19,21 +22,30 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    protected $userRepository;
 
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->middleware('guest')->except('logout');
+        parent::__construct();
+        $this->userRepository = $userRepository;
+    }
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/admin/students';
+//    protected $redirectTo = '';
+
+    public function redirectTo()
+    {
+        $userLogin = Auth::user();
+        return route('users.profile', $userLogin->id);
+    }
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
 }
