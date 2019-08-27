@@ -64,11 +64,20 @@
                     </label>
                 </div>
             </div>
+
             <!-- /input-group -->
             {!! Form::close() !!}
             {!! Form::open(['method'=>'post', 'route'=>'students.sendEmail']) !!}
             <div class="col-sm-2" style="float:right; margin-bottom: 2%">
                 <button class="btn btn-danger">Send warning email</button>
+            </div>
+            {!! Form::close() !!}
+
+            {!! Form::open(['method'=>'get', 'route'=>'students.index']) !!}
+            <div class="col-sm-12" style="margin-bottom: 2%">
+                <label style="display: inline-block;">
+                    {!! Form::select('record', ['50'=> '50', '100'=>'100', '500'=>'500'],\Request::get('record'), ['class'=>'form-control', 'onchange'=>'this.form.submit();']) !!}
+                </label>
             </div>
             {!! Form::close() !!}
 
@@ -121,7 +130,7 @@
                             <button><a href="{{route('students.show', $student->id)}}">Mark</a></button>
                         </td>
                         <td class="center">
-{{--                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>--}}
+                            {{--                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>--}}
                             <button><a href="javascript:void(0)" id="edit-student" data-id="{{ $student->id }}">Edit</a>
                             </button>
                         </td>
@@ -137,7 +146,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {!! $students->links() !!}
+            {!! $students->links(); !!}
         </div>
     </div>
 
@@ -165,6 +174,7 @@
                             <div class="col-sm-12">
                                 <select class="form-control" name="class_id" id="class_id">
                                     <option value="">Choose class</option>
+
                                     @foreach($classes as $class)
                                         <option value="{{$class->id}}">{{$class->name}}</option>
                                     @endforeach
@@ -237,7 +247,6 @@
                 $('#ajax-student-modal').modal('hide');
             });
 
-
             $('body').on('click', '#edit-student', function () {
                 var id = $(this).data('id');
                 $.get('admin/students/' + id + '/edit', function (data) {
@@ -301,5 +310,13 @@
             });
         });
 
+
+        $(document).on('click', '.paginate', function (event) {
+            event.preventDefault();
+            alert('jkfjdkfjk');
+            var numberRecord = document.getElementById("record");
+            console.log(numberRecord);
+
+        });
     </script>
 @endsection

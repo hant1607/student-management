@@ -57,6 +57,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth'], ['except' => 'admin/s
 
     Route::get('results/students/{id}', 'ResultController@getAddStudentResult')->name('results.addResult');
     Route::post('results/students/{id}', 'ResultController@postStudentResult')->name('results.storeResults');
+    Route::post('users/update-result/{id}', 'ResultController@updateUserResult')->name('users.updateResult');
 });
 
 Auth::routes();

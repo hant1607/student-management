@@ -41,11 +41,12 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $data['students'] = $this->studentRepository->search($request->all());
-        $classes = $this->classRepository->getAll();
+        $record = $request->record == null ? 50 : $request->record;
+        $data['students'] = $this->studentRepository->search($request->all())->paginate($record);
+        $data['classes'] = $this->classRepository->getAll();
         $subjects = $this->subjectRepository->getAll();
-        $sj = $subjects->pluck('name', 'id')->all();
-        return view('admin.students.list', $data, ['sj' => $sj, 'classes' => $classes]);
+        $data['sj'] = $subjects->pluck('name', 'id')->all();
+        return view('admin.students.list', $data);
     }
 
     /**
@@ -156,11 +157,16 @@ class StudentController extends Controller
         $data = $this->studentRepository->uploadImage($request);
         $student = $this->studentRepository->update($id, $data);
         $student->class_id = $student->class->name;
-        if ($student->gender == 1){
+        if ($student->gender == 1) {
             $student->gender = 'Male';
-        }else{
+        } else {
             $student->gender = 'Female';
         }
         return Response::json($student);
+    }
+
+    public function getRecord(Request $request)
+    {
+        $numberRecord = $request->paginate;
     }
 }

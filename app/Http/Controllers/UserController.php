@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AccountRequest;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\UserRequest;
+use App\Repositories\ClassRepository;
 use App\Repositories\StudentRepository;
+use App\Repositories\SubjectRepository;
 use App\Repositories\UserRepository;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -15,12 +18,19 @@ class UserController extends Controller
 {
     protected $userRepository;
     protected $studentRepository;
+    protected $classRepository;
+    protected $subjectRepository;
 
-    public function __construct(UserRepository $userRepository, StudentRepository $studentRepository)
+    public function __construct(UserRepository $userRepository,
+                                StudentRepository $studentRepository,
+                                ClassRepository $classRepository,
+                                SubjectRepository $subjectRepository)
     {
         parent::__construct();
         $this->userRepository = $userRepository;
         $this->studentRepository = $studentRepository;
+        $this->classRepository = $classRepository;
+        $this->subjectRepository = $subjectRepository;
     }
 
     /**
@@ -30,7 +40,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = $this->userRepository->getAll();
+        $user = $this->userRepository->getPanigate();
         return view('admin.user.list', ['users' => $user]);
     }
 
@@ -110,30 +120,57 @@ class UserController extends Controller
     {
         $student = $this->userRepository->getStudentLogin($id)->first();
         $user = $this->userRepository->find($id);
-        return view('admin.user.profile', compact('user', 'student'));
+        $classes = $this->classRepository->getAll();
+        if ($student) {
+            $subjects = $this->userRepository->getSubjectNotStudy();
+        }
+        return view('admin.user.profile', compact('user', 'student', 'classes', 'subjects'));
     }
 
     public function editProfile($id)
     {
-        $students = $this->userRepository->getStudentLogin($id)->toJson();
+        $students = $this->userRepository->getStudentLogin($id)->first();
         $user = $this->userRepository->find($id);
         return Response::json(array($user, $students));
     }
 
-    public function updateProfile(StudentRequest $request)
+    public function updateProfile(AccountRequest $request)
     {
-        $id = $request->id;
-        DB::beginTransaction();
-        try {
-            $user = $this->userRepository->update($id, $request->all());
-            $data = $this->studentRepository->uploadImage($request);
-            $data['user_id'] = $user->id;
-            $student = $this->studentRepository->update($id, $data);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw new \Exception($e->getMessage());
+        $userId = $request->userId;
+        $studentId = $request->studentId;
+        if ($studentId) {
+            DB::beginTransaction();
+            try {
+                $user = $this->userRepository->update($userId, $request->all());
+
+                $data = $request->all();
+                if ($request->hasFile('image')) {
+                    $file = $request->file('image');
+                    $end = $file->getClientOriginalExtension();
+                    if ($end != 'jpg' && $end != 'png' && $end != 'jpeg') {
+                        return redirect()->back()->with('error', 'You have to enter image have .jpg or .png or .jpeg');
+                    }
+                    $name = $file->getClientOriginalName();
+                    $file->move(public_path('upload'), $name);
+                    $data['image'] = $name;
+                }
+                $data['user_id'] = $user->id;
+                $student = $this->studentRepository->update($studentId, $data);
+                if ($student->gender == 1) {
+                    $student->gender = 'Male';
+                } else {
+                    $student->gender = 'Female';
+                }
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw new \Exception($e->getMessage());
+            }
+            return Response::json(array($user, $student));
+        } else {
+            $user = $this->userRepository->update($userId, $request->all());
+            return Response::json($user);
         }
-        return Response::json(array($user, $student));
+
     }
 }

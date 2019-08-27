@@ -33,7 +33,7 @@ class StudentRequest extends FormRequest
         ];
         if($this->request->has('username')) {
             $arr_validate = array_merge($arr_validate,[
-                'username'=>'required',
+                'username'=>'required|unique:users,username',
                 'level'=>'required',
                 'email'=>'required|email',
                 'password'=>'required|min:4|max:10',

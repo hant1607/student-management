@@ -27,7 +27,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = $this->subjectRepository->getAll();
+        $subjects = $this->subjectRepository->getPanigate();
         return view('admin.subjects.list', ['subjects'=>$subjects]);
     }
 

@@ -51,7 +51,7 @@ class StudentRepository extends EloquentRepository
 
     public function search($data)
     {
-        $students = $this->model->select('*');
+        $students = $this->model->select('*')->with('class', 'user');
 
         if(isset($data['min_age'])){
             $minYear = Carbon::now()->subYears($data['min_age']);
@@ -94,7 +94,7 @@ class StudentRepository extends EloquentRepository
                 $students->has('subjects', '<>', $countSubjects);
             }
         }
-        return $students->paginate(5);
+        return $students;
 
     }
 
@@ -104,18 +104,6 @@ class StudentRepository extends EloquentRepository
         $students = $this->model->has('subjects', $countSubjects)->whereHas('subjects', function ($query){
           $query->havingRaw('AVG(mark) < 5');
         });
-        //dd($students->get());
-//        $students = [];
-//        foreach ($countStudent as $st){
-//            $avgMark = $st->results->avg('mark');
-//            if($avgMark < 5){
-//                $students[] = $st;
-//            }
-//        }
-//        foreach ($countStudent as $st){
-//            $avgMark = $st->results->avg('mark');
-//        }
-//        $students = $countStudent->where($avgMark, '<', 5);
         return $students->paginate(5);
     }
 }

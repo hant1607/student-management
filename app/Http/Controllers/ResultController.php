@@ -8,6 +8,7 @@ use App\Repositories\ResultRepository;
 use App\Models\Result;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class ResultController extends Controller
@@ -34,7 +35,7 @@ class ResultController extends Controller
     public function index()
     {
 
-        $results = $this->resultRepository->getAll();
+        $results = $this->resultRepository->getPanigate();
         return view('admin.results.list', ['results' => $results]);
     }
 
@@ -111,16 +112,16 @@ class ResultController extends Controller
      */
     public function destroy($id)
     {
-        if(Gate::allows('can-delete', 'user')){
+        if (Gate::allows('can-delete', 'user')) {
             $this->resultRepository->delete($id);
             return redirect(route('results.index'))->with('noti', 'Delete successful');
         }
-        return redirect(route('results.index'))->with('error','You are not admin. Can not delete');
+        return redirect()->back()->with('error', 'You are not admin. Can not delete');
     }
 
     public function getAddStudentResult($id)
     {
-        if(Gate::allows('can-delete', 'user')){
+        if (Gate::allows('can-delete', 'user')) {
             $subjects = $this->subjectRepository->getAll();
             //$subject = $subjects->pluck('name', 'id')->all();
             $results = $this->studentRepository->getOne($id);
@@ -144,4 +145,15 @@ class ResultController extends Controller
         return redirect(route('students.show', $results->id))->with('noti', 'Add successful');
     }
 
+    public function updateUserResult(Request $request, $id)
+    {
+        $student = $this->studentRepository->find($id);
+        foreach ($request->subject_id as $subject_id){
+            $student->subjects()->attach($subject_id,
+                [
+                   'mark' => '0'
+                ]);
+        }
+        return redirect(route('students.show', $student->id))->with('noti', 'Add successful');
+    }
 }

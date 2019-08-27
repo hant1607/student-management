@@ -18,4 +18,6 @@ class SubjectRepository extends EloquentRepository
     {
         parent::__construct($subject);
     }
+
+
 }

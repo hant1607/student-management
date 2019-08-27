@@ -22,6 +22,7 @@
                     </button>
                 </div>
                 <div style="display: none" id="count-subject">{{count($subjects)}}</div>
+
                 {!! Form::open(['method'=>'POST', 'route'=>['results.storeResults', $id]]) !!}
                 <div id="form-body">
                     @if(empty(old('subject_id')))

@@ -42,6 +42,11 @@ abstract class EloquentRepository
      */
     public function getAll()
     {
+        return $this->model->all();
+    }
+
+    public function getPanigate()
+    {
         return $this->model->paginate(10);
     }
 

@@ -20,7 +20,7 @@ class FacultyController extends Controller
 
     public function getList()
     {
-        $faculty = $this->facultyRepository->getAll();
+        $faculty = $this->facultyRepository->getPanigate();
         return view('admin.faculties.list', ['facultyData' => $faculty]);
     }
 

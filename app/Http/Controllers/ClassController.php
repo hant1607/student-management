@@ -23,7 +23,7 @@ class ClassController extends Controller
 
     public function getList()
     {
-        $class = $this->classRepository->getAll();
+        $class = $this->classRepository->getPanigate();
 
         return view('admin.classes.index', ['classData' => $class]);
     }
