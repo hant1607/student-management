@@ -1,35 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2b71f4b0-eb07-49b3-9389-eb983634395b" name="Default Changelist" comment="edit profile">
-      <change beforePath="$PROJECT_DIR$/.idea/StudentManagement.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/StudentManagement.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="2b71f4b0-eb07-49b3-9389-eb983634395b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/database/factories/StudentFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/StudentsTableSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClassController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClassController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FacultyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FacultyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ResultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ResultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SubjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SubjectController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/RegisterRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AccountRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StudentRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StudentRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UserRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UserRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ClassModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ClassModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Subject.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Subject.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/EloquentRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/EloquentRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/StudentRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/StudentRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/SubjectRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SubjectRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/results/add_student_result.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/results/add_student_result.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/students/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/students/list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/user/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/user/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1139">
-              <caret line="42" column="52" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
+            <state relative-caret-position="-357">
+              <caret line="115" column="26" selection-start-line="115" selection-start-column="26" selection-end-line="115" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -338,7 +313,7 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-permission" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="676" />
     <option name="width" value="697" />
     <option name="height" value="735" />
@@ -421,6 +396,12 @@
               <item name="student-management" type="462c0819:PsiDirectoryNode" />
               <item name="database" type="462c0819:PsiDirectoryNode" />
               <item name="factories" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="student-management" type="b2602c69:ProjectViewProjectNode" />
+              <item name="student-management" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="student-management" type="b2602c69:ProjectViewProjectNode" />
@@ -596,7 +577,7 @@
       <workItem from="1566746291212" duration="11706000" />
       <workItem from="1566783885231" duration="23330000" />
       <workItem from="1566830051676" duration="4565000" />
-      <workItem from="1566870396995" duration="21960000" />
+      <workItem from="1566870396995" duration="22519000" />
     </task>
     <task id="LOCAL-00001" summary="xong cac man">
       <created>1563731922761</created>
@@ -745,19 +726,25 @@
       <option name="project" value="LOCAL" />
       <updated>1566465001960</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="update subject + phan trang">
+      <created>1566897920801</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1566897920801</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="903954000" />
+    <option name="totallyTimeSpent" value="904513000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="676" y="0" width="697" height="735" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.10989011" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.18759455" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.57937807" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -768,7 +755,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3156146" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.4976452" visible="true" weight="0.2192691" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4976452" visible="true" weight="0.33551556" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5023548" side_tool="true" weight="0.4551495" />
       <window_info active="true" anchor="bottom" id="Command Line Tools Console" order="12" visible="true" weight="0.4762684" />
       <window_info anchor="bottom" id="Messages" order="13" />
@@ -863,7 +850,8 @@
     <MESSAGE value="edit form multi-add results" />
     <MESSAGE value="edit upload image" />
     <MESSAGE value="edit profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit profile" />
+    <MESSAGE value="update subject + phan trang" />
+    <option name="LAST_COMMIT_MESSAGE" value="update subject + phan trang" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -1266,8 +1254,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1139">
-          <caret line="42" column="52" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
+        <state relative-caret-position="-357">
+          <caret line="115" column="26" selection-start-line="115" selection-start-column="26" selection-end-line="115" selection-end-column="26" />
         </state>
       </provider>
     </entry>
