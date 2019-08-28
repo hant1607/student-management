@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use \App\Models\Student;
-use \App\Models\ClassModel;
 
 class StudentsTableSeeder extends Seeder
 {

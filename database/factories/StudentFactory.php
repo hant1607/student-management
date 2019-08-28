@@ -23,6 +23,6 @@ $factory->define(Student::class, function () use ($faker, $class){
         'birthday'=>$faker->date('Y-m-d', 'now'),
         'gender'=> rand(1,2),
         'phone'=>$faker->phoneNumber,
-//        'image'=>$faker->image(public_path('upload/'), 100, 70)
+        'image'=>$faker->image('public/upload', 100, 70, null, false)
     ];
 });

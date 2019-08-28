@@ -65,8 +65,8 @@
                 </div>
             </div>
 
-            <!-- /input-group -->
             {!! Form::close() !!}
+
             {!! Form::open(['method'=>'post', 'route'=>'students.sendEmail']) !!}
             <div class="col-sm-2" style="float:right; margin-bottom: 2%">
                 <button class="btn btn-danger">Send warning email</button>
@@ -146,7 +146,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {!! $students->links(); !!}
+            {!! $students->appends(request()->input())->links() !!}
         </div>
     </div>
 
