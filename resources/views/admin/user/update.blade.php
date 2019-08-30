@@ -16,23 +16,6 @@
                     {!! Form::text('username', $user->username, ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Level') !!}
-                    <label class="radio-inline">
-                        <input name="level" value="1" type="radio"
-                        @if($user->level == 1)
-                            {{'checked'}}
-                                @endif
-                        >Admin
-                    </label>
-                    <label class="radio-inline">
-                        <input name="level" value="0" type="radio"
-                        @if($user->level == 0)
-                            {{'checked'}}
-                                @endif
-                        >Member
-                    </label>
-                </div>
-                <div class="form-group">
                     {!! Form::label('Email') !!}
                     {!! Form::email('email', $user->email, ['class' => 'form-control', 'placeholder'=>'Please enter email', 'readonly'=>'readonly']) !!}
                 </div>
@@ -46,6 +29,10 @@
 {{--                    {!! Form::password('passwordAgain',$user->password, ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}--}}
                     <input class="form-control" type="password" name="passwordAgain"
                            placeholder="Please enter confirm password" value="{{$user->password}}">
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Role') !!}
+                    {!! Form::select('roles', $roles, $userRole, ['class' => 'form-control']) !!}
                 </div>
                 {!! Form::submit('Edit', ['class'=>'btn btn-success']) !!}
                 {!! Form::close() !!}

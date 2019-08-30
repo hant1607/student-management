@@ -13,7 +13,7 @@
                 <tr align="center">
                     <th>ID</th>
                     <th>User Name</th>
-                    <th>Level</th>
+                    <th>Role</th>
                     <th>Email</th>
                     <th>Edit</th>
                     @can('can-delete', 'user')
@@ -28,10 +28,10 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->username}}</td>
                         <td>
-                            @if($user->level == 1)
-                                {{"Admin"}}
-                            @else
-                                {{"Member"}}
+                            @if(!empty($user->getRoleNames()))
+                                @foreach($user->getRoleNames() as $role)
+                                    {{ $role }}
+                                @endforeach
                             @endif
                         </td>
                         <td>{{$user->email}}</td>

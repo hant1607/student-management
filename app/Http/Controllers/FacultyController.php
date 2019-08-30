@@ -49,11 +49,7 @@ class FacultyController extends Controller
 
     public function getDelete($id)
     {
-        if(Gate::allows('can-delete', 'user')){
-            $this->facultyRepository->delete($id);
-            return redirect(route('faculty.index'))->with('noti', 'Delete successful');
-        }
-        return redirect(route('faculty.index'))->with('error', 'You are not admin. Can not delete');
-
+        $this->facultyRepository->delete($id);
+        return redirect(route('faculty.index'))->with('noti', 'Delete successful');
     }
 }

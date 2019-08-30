@@ -56,10 +56,7 @@ class ClassController extends Controller
 
     public function getDelete($id)
     {
-        if (Gate::allows('can-delete', 'user')) {
-            $this->classRepository->delete($id);
-            return redirect(route('class.index'))->with('noti', 'Delete successful');
-        }
-        return redirect(route('class.index'))->with('error', 'You are not admin. Can not delete');
+        $this->classRepository->delete($id);
+        return redirect(route('class.index'))->with('noti', 'Delete successful');
     }
 }

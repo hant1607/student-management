@@ -18,6 +18,11 @@ class SubjectController extends Controller
         parent::__construct();
         $this->subjectRepository = $subjectRepository;
         $this->resultRepository = $resultRepository;
+
+        $this->middleware('permission:subject-list');
+        $this->middleware('permission:subject-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:subject-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:subject-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -28,7 +33,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = $this->subjectRepository->getPanigate();
-        return view('admin.subjects.list', ['subjects'=>$subjects]);
+        return view('admin.subjects.list', ['subjects' => $subjects]);
     }
 
     /**
@@ -96,10 +101,7 @@ class SubjectController extends Controller
      */
     public function destroy($id)
     {
-        if(Gate::allows('can-delete', 'user')){
-            $this->subjectRepository->delete($id);
-            return redirect(route('subjects.index'))->with('noti', 'Delete successful');
-        }
-        return redirect(route('subjects.index'))->with('error', 'You are not admin. Can not delete');
+        $this->subjectRepository->delete($id);
+        return redirect(route('subjects.index'))->with('noti', 'Delete successful');
     }
 }

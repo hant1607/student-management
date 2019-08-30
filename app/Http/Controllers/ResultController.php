@@ -25,6 +25,8 @@ class ResultController extends Controller
         $this->resultRepository = $resultRepository;
         $this->studentRepository = $studentRepository;
         $this->subjectRepository = $subjectRepository;
+
+        $this->middleware('permission:mark-add', ['only' => ['getAddStudentResult', 'postStudentResult']]);
     }
 
     /**
@@ -112,22 +114,16 @@ class ResultController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::allows('can-delete', 'user')) {
-            $this->resultRepository->delete($id);
-            return redirect(route('results.index'))->with('noti', 'Delete successful');
-        }
-        return redirect()->back()->with('error', 'You are not admin. Can not delete');
+        $this->resultRepository->delete($id);
+        return redirect(route('results.index'))->with('noti', 'Delete successful');
     }
 
     public function getAddStudentResult($id)
     {
-        if (Gate::allows('can-delete', 'user')) {
-            $subjects = $this->subjectRepository->getAll();
-            //$subject = $subjects->pluck('name', 'id')->all();
-            $results = $this->studentRepository->getOne($id);
-            return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
-        }
-        return redirect()->back()->with('error', 'You are not admin. Can not edit mark');
+        $subjects = $this->subjectRepository->getAll();
+        //$subject = $subjects->pluck('name', 'id')->all();
+        $results = $this->studentRepository->getOne($id);
+        return view('admin.results.add_student_result', compact('subjects', 'results', 'id'));
     }
 
     public function postStudentResult(AddMoreRequest $request, $id)
@@ -148,10 +144,10 @@ class ResultController extends Controller
     public function updateUserResult(Request $request, $id)
     {
         $student = $this->studentRepository->find($id);
-        foreach ($request->subject_id as $subject_id){
+        foreach ($request->subject_id as $subject_id) {
             $student->subjects()->attach($subject_id,
                 [
-                   'mark' => '0'
+                    'mark' => '0'
                 ]);
         }
         return redirect(route('students.show', $student->id))->with('noti', 'Add successful');

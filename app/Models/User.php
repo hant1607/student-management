@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
+    protected $guard_name = 'web';
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'level', 'email', 'password', 'provider', 'provider_id'
+        'username', 'email', 'password', 'provider', 'provider_id', 'role_id'
     ];
 
     /**

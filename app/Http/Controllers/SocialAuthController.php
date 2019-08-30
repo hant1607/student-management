@@ -57,8 +57,8 @@ class SocialAuthController extends Controller
         $user = Socialite::driver($social)->user();
         $user->provider = $social;
         $authUser = $this->findOrCreateUser($user);
+        $authUser->assignRole('member');
         Auth::login($authUser, true);
-
-        return redirect()->route('students.index');
+        return redirect()->route('users.profile', $authUser->id);
     }
 }

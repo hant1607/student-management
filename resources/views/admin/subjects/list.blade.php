@@ -15,9 +15,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Edit</th>
-                    @can('can-delete', 'user')
-                        <th>Delete</th>
-                    @endcan
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,17 +24,20 @@
                         <td>{{$subject->id}}</td>
                         <td>{{$subject->name}}</td>
                         <td class="center">
-                            <button type="submit"><a href="{{route('subjects.edit', ['subject'=>$subject])}}">Edit</a>
-                            </button>
+                            @can('subject-edit')
+                                <button type="submit"><a
+                                            href="{{route('subjects.edit', ['subject'=>$subject])}}">Edit</a>
+                                </button>
+                            @endcan
                         </td>
-                        @can('can-delete', 'user')
-                            <td class="center">
+                        <td class="center">
+                            @can('subject-delete')
                                 {!! Form::open(['method'=>'DELETE', 'route'=>['subjects.destroy', 'subject'=>$subject]]) !!}
                                 <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
                                 </button>
                                 {!! Form::close() !!}
-                            </td>
-                        @endcan
+                            @endcan
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

@@ -51,11 +51,6 @@
                     {!! Form::text('username', old('username'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Level') !!}
-                    {!! Form::radio('level', '1', ['class' => 'radio-inline']) !!} Admin
-                    {!! Form::radio('level', '0', ['class' => 'radio-inline']) !!} Member
-                </div>
-                <div class="form-group">
                     {!! Form::label('Email') !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>'Please enter email']) !!}
                 </div>

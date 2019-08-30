@@ -25,7 +25,6 @@ class UserRequest extends FormRequest
     {
         $arr_validate = [
             'username' => 'required|unique:users,username',
-            'level' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:4',
             'passwordAgain' => 'required|same:password'

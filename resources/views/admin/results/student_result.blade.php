@@ -11,7 +11,7 @@
                 </h1>
             </div>
 
-            @can('can-delete', 'user')
+            @can('mark-add')
                 <div class="col-sm-2">
                     <button type="button" style="margin-bottom: 20px;" class="btn btn-success"
                             onclick="location.href='{{route('results.addResult', $id)}}'">+ Add mark

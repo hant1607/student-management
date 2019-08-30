@@ -24,7 +24,7 @@
                 <div style="display: none" id="count-subject">{{count($subjects)}}</div>
 
                 {!! Form::open(['method'=>'POST', 'route'=>['results.storeResults', $id]]) !!}
-                <div id="form-body">
+                <div id="form-body" class="row">
                     @if(empty(old('subject_id')))
                         @foreach($results as $result)
                             <div class="field">
@@ -71,10 +71,13 @@
                         @endforeach
                     @endif
                 </div>
-                <div class="col-lg-2" style="float: none;">
-                    {!! Form::submit('Add', ['class'=>'btn btn-success', 'id'=>'submit']) !!}
-                    {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                <div class="row">
+                    <div class="col-lg-2">
+                        {!! Form::submit('Add', ['class'=>'btn btn-success', 'id'=>'submit']) !!}
+                        {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}
+                    </div>
                 </div>
+
                 {!! Form::close() !!}
             </div>
         </div>

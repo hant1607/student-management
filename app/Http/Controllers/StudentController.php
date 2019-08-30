@@ -32,6 +32,11 @@ class StudentController extends Controller
         $this->subjectRepository = $subjectRepository;
         $this->userRepository = $userRepository;
         $this->classRepository = $classRepository;
+
+        $this->middleware('permission:student-list');
+        $this->middleware('permission:student-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:student-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:student-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -132,11 +137,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::allows('can-delete', 'user')) {
-            $this->studentRepository->delete($id);
-            return redirect(route('students.index'))->with('noti', 'Delete successful');
-        }
-        return redirect(route('students.index'))->with('error', 'You are not admin. Can not delete');
+        $this->studentRepository->delete($id);
+        return redirect(route('students.index'))->with('noti', 'Delete successful');
     }
 
     public function sendEmail()
@@ -163,10 +165,5 @@ class StudentController extends Controller
             $student->gender = 'Female';
         }
         return Response::json($student);
-    }
-
-    public function getRecord(Request $request)
-    {
-        $numberRecord = $request->paginate;
     }
 }

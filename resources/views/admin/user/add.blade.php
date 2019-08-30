@@ -17,11 +17,6 @@
                     {!! Form::text('username', old('name'), ['class'=>'form-control', 'placeholder'=>'Please enter User Name']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('Level') !!}
-                    {!! Form::radio('level', '1', ['class' => 'radio-inline']) !!} Admin
-                    {!! Form::radio('level', '0', ['class' => 'radio-inline']) !!} Member
-                </div>
-                <div class="form-group">
                     {!! Form::label('Email') !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder'=>'Please enter email']) !!}
                 </div>
@@ -32,6 +27,10 @@
                 <div class="form-group">
                     {!! Form::label('Confirm Password') !!}
                     {!! Form::password('passwordAgain', ['class'=>'form-control', 'placeholder' => 'Please enter confirm password']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('Role') !!}
+                    {!! Form::select('roles', $roles, ['class'=>'form-control']) !!}
                 </div>
                 {!! Form::submit('Add', ['class'=>'btn btn-success']) !!}
                 {!! Form::reset('Reset', ['class'=>'btn btn-default']) !!}

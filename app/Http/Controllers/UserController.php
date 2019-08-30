@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -40,8 +41,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = $this->userRepository->getPanigate();
-        return view('admin.user.list', ['users' => $user]);
+        $users = $this->userRepository->getPanigate();
+        //$roles = Role::pluck('name', 'name')->all();
+        return view('admin.user.list', compact('users', 'roles'));
     }
 
     /**
@@ -51,7 +53,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.add');
+        $roles = Role::pluck('name', 'name')->all();
+        return view('admin.user.add', compact('roles'));
     }
 
     /**
@@ -62,7 +65,8 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $this->userRepository->create($request->all());
+        $user = $this->userRepository->create($request->all());
+        $user->assignRole($request->roles);
         return redirect()->back()->with('noti', 'Add successful');
     }
 
@@ -83,9 +87,12 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('admin.user.update', ['user' => $user]);
+        $user = $this->userRepository->find($id);
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
+        return view('admin.user.update', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -97,7 +104,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $this->userRepository->update($id, $request->all());
+        $user = $this->userRepository->update($id, $request->all());
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assignRole($request->input('roles'));
         return redirect(route('users.index'))->with('noti', 'Update successful');
     }
 
@@ -109,11 +118,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::allows('can-delete', 'user')) {
-            $this->userRepository->delete($id);
-            return redirect(route('users.index'))->with('noti', 'Delete successful');
-        }
-        return redirect(route('users.index'))->with('error', 'You are not admin. Can not delete');
+        $this->userRepository->delete($id);
+        return redirect(route('users.index'))->with('noti', 'Delete successful');
     }
 
     public function getProfile($id)
