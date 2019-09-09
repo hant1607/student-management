@@ -1,0 +1,16 @@
+{
+  "User": "Người dùng",
+  "Add": "Thêm",
+  "User Name": "Tên người dùng",
+  "Please enter User Name": "Nhập tên người dùng",
+  "Email": "Email",
+  "Please enter Email": "Nhập email",
+  "Password": "Mật khẩu",
+  "Please enter password": "Nhập mật khẩu",
+  "Confirm Password": "Xác nhận mật khẩu",
+  "Please enter confirm password": "Nhập mật khẩu xác nhận",
+  "Role": "Vai trò",
+  "Reset": "Đặt lại",
+  "Settings": "Cài đặt",
+  "Logout": "Đăng xuất"
+}

@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix'=>'admin', 'middleware' => ['auth'], ['except' => 'admin/students/create']], function (){
+Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function (){
    Route::group(['prefix'=>'faculty'], function(){
        Route::get('list', 'FacultyController@getList')->name('faculty.index');
 
@@ -30,7 +30,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth'], ['except' => 'admin/s
        Route::get('delete/{id}', 'FacultyController@getDelete')->name('faculty.delete');
    }) ;
 
-    Route::group(['prefix'=>'class'], function(){
+    Route::group(['prefix'=>'class', ['middleware' => ['auth:api', 'role:admin']]], function(){
         Route::get('list', 'ClassController@getList')->name('class.index');
 
         Route::get('add', 'ClassController@getAdd')->name('class.create');
@@ -55,17 +55,25 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth'], ['except' => 'admin/s
     Route::post('users/update-profile', 'UserController@updateProfile')->name('users.updateProfile');
     Route::resource('users', 'UserController');
 
-    Route::get('results/students/{id}', 'ResultController@getAddStudentResult')->name('results.addResult');
+    Route::get('results/students/{id}', 'ResultController@getAddStudentResult', function (\App\Models\Result $id){
+        $id->title;
+    })->name('results.addResult');
     Route::post('results/students/{id}', 'ResultController@postStudentResult')->name('results.storeResults');
     Route::post('users/update-result/{id}', 'ResultController@updateUserResult')->name('users.updateResult');
 
     Route::resource('roles', 'RoleController');
+
+    Route::get('change-lang/{lang}', 'LangController@changeLang')->name('change-lang');
 });
 
 Auth::routes();
 Route::get('auth/social/{social}', 'SocialAuthController@redirectToProvider')->name('social.login') ;
 Route::get('auth/{social}/callback', 'SocialAuthController@handleProviderCallback');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

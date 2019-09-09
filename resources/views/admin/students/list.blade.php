@@ -65,19 +65,17 @@
                 </div>
             </div>
 
+            <div class="col-sm-12" style="margin-bottom: 2%">
+                <label style="display: inline-block;">
+                    {!! Form::select('record', ['50'=> '50', '100'=>'100', '500'=>'500'],\Request::get('record'), ['class'=>'form-control', 'onchange'=>'this.form.submit();']) !!}
+                </label>
+            </div>
+
             {!! Form::close() !!}
 
             {!! Form::open(['method'=>'post', 'route'=>'students.sendEmail']) !!}
             <div class="col-sm-2" style="float:right; margin-bottom: 2%">
                 <button class="btn btn-danger">Send warning email</button>
-            </div>
-            {!! Form::close() !!}
-
-            {!! Form::open(['method'=>'get', 'route'=>'students.index']) !!}
-            <div class="col-sm-12" style="margin-bottom: 2%">
-                <label style="display: inline-block;">
-                    {!! Form::select('record', ['50'=> '50', '100'=>'100', '500'=>'500'],\Request::get('record'), ['class'=>'form-control', 'onchange'=>'this.form.submit();']) !!}
-                </label>
             </div>
             {!! Form::close() !!}
 
@@ -311,13 +309,5 @@
             });
         });
 
-
-        $(document).on('click', '.paginate', function (event) {
-            event.preventDefault();
-            alert('jkfjdkfjk');
-            var numberRecord = document.getElementById("record");
-            console.log(numberRecord);
-
-        });
     </script>
 @endsection

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClassRequest;
-use App\Models\Faculty;
 use App\Models\ClassModel;
 use App\Repositories\ClassRepository;
 use App\Repositories\FacultyRepository;
-use Illuminate\Support\Facades\Gate;
 
 class ClassController extends Controller
 {

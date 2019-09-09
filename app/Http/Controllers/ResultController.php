@@ -9,7 +9,7 @@ use App\Models\Result;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ResultController extends Controller
 {
@@ -36,7 +36,7 @@ class ResultController extends Controller
      */
     public function index()
     {
-
+        $slug = SlugService::createSlug(Result::class, 'slug', 'Results list');
         $results = $this->resultRepository->getPanigate();
         return view('admin.results.list', ['results' => $results]);
     }
@@ -48,6 +48,7 @@ class ResultController extends Controller
      */
     public function create()
     {
+        $slug = SlugService::createSlug(Result::class, 'slug', 'Create result');
         $subjects = $this->subjectRepository->getAll();
         $subject = $subjects->pluck('name', 'id')->all();
         $students = $this->studentRepository->getAll();
@@ -63,6 +64,7 @@ class ResultController extends Controller
      */
     public function store(ResultRequest $request)
     {
+        $slug = SlugService::createSlug(Result::class, 'slug', "Create result");
         $this->resultRepository->create($request->all());
         return redirect()->back()->with('noti', 'Add successful');
     }
@@ -120,6 +122,7 @@ class ResultController extends Controller
 
     public function getAddStudentResult($id)
     {
+        $slug = SlugService::createSlug(Result::class, 'slug', "Create multi result for student");
         $subjects = $this->subjectRepository->getAll();
         //$subject = $subjects->pluck('name', 'id')->all();
         $results = $this->studentRepository->getOne($id);

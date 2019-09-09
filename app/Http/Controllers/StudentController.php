@@ -9,9 +9,7 @@ use App\Models\Student;
 use App\Repositories\SubjectRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Jobs\SendEmailJob;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 
@@ -46,12 +44,21 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $record = $request->record == null ? 50 : $request->record;
-        $data['students'] = $this->studentRepository->search($request->all())->paginate($record);
-        $data['classes'] = $this->classRepository->getAll();
-        $subjects = $this->subjectRepository->getAll();
-        $data['sj'] = $subjects->pluck('name', 'id')->all();
-        return view('admin.students.list', $data);
+
+        /*api*/
+        $request = Request::create('/api/students', 'GET');
+        $students = \Route::dispatch($request);
+        $data = json_decode($students->getContent(), true);
+        return view('admin.api_students.list', compact('data'));
+
+        /*
+         * index controller*/
+//        $record = $request->record == null ? 50 : $request->record;
+//        $data['students'] = $this->studentRepository->search($request->all())->paginate($record);
+//        $data['classes'] = $this->classRepository->getAll();
+//        $subjects = $this->subjectRepository->getAll();
+//        $data['sj'] = $subjects->pluck('name', 'id')->all();
+//        return view('admin.students.list', $data);
     }
 
     /**
@@ -63,7 +70,7 @@ class StudentController extends Controller
     {
         $classes = $this->classRepository->getAll();
         $class = $classes->pluck('name', 'id')->all();
-        return view('admin.students.add', ['class' => $class]);
+        return view('admin.api_students.add', ['class' => $class]);
     }
 
     /**
@@ -74,18 +81,23 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $user = $this->userRepository->create($request->all());
-            $data = $this->studentRepository->uploadImage($request);
-            $data['user_id'] = $user->id;
-            $this->studentRepository->create($data);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw new \Exception($e->getMessage());
-        }
-        return redirect()->back()->with('noti', 'Add successful!');
+//        DB::beginTransaction();
+//        try {
+//            $user = $this->userRepository->create($request->all());
+//            $data = $this->studentRepository->uploadImage($request);
+//            $data['user_id'] = $user->id;
+//            $this->studentRepository->create($data);
+//            DB::commit();
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//            throw new \Exception($e->getMessage());
+//        }
+//        return redirect()->back()->with('noti', 'Add successful!');
+
+        /*api*/
+        $request = StudentRequest::create('/api/students', 'POST');
+        \Route::dispatch($request);
+        return redirect()->back()->with('noti', 'Add students using api successful!');
     }
 
     /**
@@ -96,8 +108,15 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $results = $this->studentRepository->getOne($id);
-        return view('admin.results.student_result', compact('results', 'id'));
+//        $results = $this->studentRepository->getOne($id);
+//        return view('admin.results.student_result', compact('results', 'id'));
+
+
+        /*api*/
+        $request = StudentRequest::create("/api/students/$id", 'GET');
+        $students = \Route::dispatch($request);
+        $data = json_decode($students->getContent(), true);
+        return view('admin.api_students.student_result', compact('data', 'id'));
     }
 
     /**
@@ -106,13 +125,16 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-//        $classes = $this->classRepository->getAll();
-//        $class = $classes->pluck('name', 'id')->all();
-//        return view('admin.students.update', ['student' => $student, 'class' => $class]);
-        $student = $this->studentRepository->find($id);
-        return Response::json($student);
+        $classes = $this->classRepository->getAll();
+        $class = $classes->pluck('name', 'id')->all();
+        return view('admin.api_students.update', compact('student', 'class'));
+
+
+        /*edit by popup*/
+//        $student = $this->studentRepository->find($id);
+//        return Response::json($student);
     }
 
     /**
@@ -124,9 +146,15 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, $id)
     {
-        $data = $this->studentRepository->uploadImage($request);
-        $this->studentRepository->update($id, $data);
-        return redirect(route('students.index'))->with('noti', 'Update successful');
+//        $data = $this->studentRepository->uploadImage($request);
+//        $this->studentRepository->update($id, $data);
+//        return redirect(route('students.index'))->with('noti', 'Update successful');
+
+
+        /*api*/
+        $request = Request::create("/api/students/$id", 'PUT');
+        \Route::dispatch($request);
+        return redirect(route('students.index'))->with('noti', 'Update student using api successful');
     }
 
     /**
@@ -137,8 +165,13 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $this->studentRepository->delete($id);
-        return redirect(route('students.index'))->with('noti', 'Delete successful');
+//        $this->studentRepository->delete($id);
+//        return redirect(route('students.index'))->with('noti', 'Delete successful');
+
+        /*api*/
+        $request = Request::create("/api/students/$id", 'DELETE');
+        \Route::dispatch($request);
+        return redirect(route('students.index'))->with('noti', 'Delete student using api successful');
     }
 
     public function sendEmail()

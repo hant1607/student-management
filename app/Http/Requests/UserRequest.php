@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'username' => 'required|unique:users,username',
             'email' => 'required|email',
             'password' => 'required|min:4',
-            'passwordAgain' => 'required|same:password'
+            'confirm_password' => 'required|same:password'
         ];
         if ($this->user) {
             $arr_validate['username'] = 'unique:users,username,' .$this->user;

@@ -16,9 +16,7 @@
                     <th>Role</th>
                     <th>Email</th>
                     <th>Edit</th>
-                    @can('can-delete', 'user')
-                        <th>Delete</th>
-                    @endcan
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,17 +36,15 @@
                         <td class="center">
                             <button><a href="{{route('users.edit', ['user'=>$user])}}">Edit</a></button>
                         </td>
-                        @can('can-delete')
-                            <td class="center">
-                                <form action="{{route('users.destroy', ['user'=>$user])}}" method="post">
-                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" onclick="return confirm('Do you want to delete this field?')">
-                                        <a>
-                                            Delete</a></button>
-                                </form>
-                            </td>
-                        @endcan
+                        <td class="center">
+                            <form action="{{route('users.destroy', ['user'=>$user])}}" method="post">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" onclick="return confirm('Do you want to delete this field?')">
+                                    <a>
+                                        Delete</a></button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

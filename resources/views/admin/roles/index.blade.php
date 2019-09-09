@@ -24,24 +24,28 @@
                         <td>{{$role->id}}</td>
                         <td>{{$role->name}}</td>
                         <td class="center">
-                            <button><a href="{{route('roles.edit', $role->id)}}">Edit</a></button>
+                            @can('role-edit')
+                                <button><a href="{{route('roles.edit', $role->id)}}">Edit</a></button>
+                            @endcan
                         </td>
 
                         <td class="center">
-                            <form action="{{route('roles.destroy', $role->id)}}" method="post">
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit"
-                                        onclick="return confirm('Do you want to delete this field?')">
-                                    <a>Delete</a></button>
-                            </form>
+                            @can('role-delete')
+                                <form action="{{route('roles.destroy', $role->id)}}" method="post">
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit"
+                                            onclick="return confirm('Do you want to delete this field?')">
+                                        <a>Delete</a></button>
+                                </form>
+                            @endcan
                         </td>
 
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-{{--            {{$users->links()}}--}}
+            {{--            {{$users->links()}}--}}
         </div>
     </div>
 @endsection

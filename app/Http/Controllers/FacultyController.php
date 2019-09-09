@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FacultyRequest;
 use App\Repositories\FacultyRepository;
 use App\Models\Faculty;
-use Illuminate\Support\Facades\Gate;
-
 
 class FacultyController extends Controller
 {

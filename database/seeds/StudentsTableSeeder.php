@@ -17,6 +17,6 @@ class StudentsTableSeeder extends Seeder
 //              factory(Student::class, 1)->create()
 //            );
 //        });
-        factory(Student::class, 1000)->create();
+        factory(Student::class, 500)->create();
     }
 }

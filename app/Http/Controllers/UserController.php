@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountRequest;
-use App\Http\Requests\StudentRequest;
 use App\Http\Requests\UserRequest;
 use App\Repositories\ClassRepository;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
 use App\Repositories\UserRepository;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 use Spatie\Permission\Models\Role;
 
@@ -32,6 +30,13 @@ class UserController extends Controller
         $this->studentRepository = $studentRepository;
         $this->classRepository = $classRepository;
         $this->subjectRepository = $subjectRepository;
+
+        //$this->middleware('permission:profile-view', ['only'=>["getProfile"]]);
+        //Auth::user()->middleware('permission:profile-view', ['only'=>['getProfile', 'editProfile', 'updateProfile']]);
+        $this->middleware('permission:user-list');
+        $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -54,7 +59,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        return view('admin.user.add', compact('roles'));
+        $userRole = Auth::user()->roles->pluck('name', 'name')->all();
+        return view('admin.user.add', compact('roles', 'userRole'));
     }
 
     /**
@@ -106,7 +112,7 @@ class UserController extends Controller
     {
         $user = $this->userRepository->update($id, $request->all());
         DB::table('model_has_roles')->where('model_id', $id)->delete();
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->roles);
         return redirect(route('users.index'))->with('noti', 'Update successful');
     }
 
@@ -124,13 +130,16 @@ class UserController extends Controller
 
     public function getProfile($id)
     {
-        $student = $this->userRepository->getStudentLogin($id)->first();
-        $user = $this->userRepository->find($id);
-        $classes = $this->classRepository->getAll();
-        if ($student) {
-            $subjects = $this->userRepository->getSubjectNotStudy();
+        if ($id == Auth::id()) {
+            $student = $this->userRepository->getStudentLogin($id)->first();
+            $user = $this->userRepository->find($id);
+            $classes = $this->classRepository->getAll();
+            if ($student) {
+                $subjects = $this->userRepository->getSubjectNotStudy();
+            }
+            return view('admin.user.profile', compact('user', 'student', 'classes', 'subjects'));
         }
-        return view('admin.user.profile', compact('user', 'student', 'classes', 'subjects'));
+        return view('admin.errors.401');
     }
 
     public function editProfile($id)

@@ -6,7 +6,6 @@ use App\Http\Requests\SubjectRequest;
 use App\Models\Subject;
 use App\Repositories\ResultRepository;
 use App\Repositories\SubjectRepository;
-use Illuminate\Support\Facades\Gate;
 
 class SubjectController extends Controller
 {
