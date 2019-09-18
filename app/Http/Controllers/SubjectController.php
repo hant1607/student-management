@@ -6,6 +6,7 @@ use App\Http\Requests\SubjectRequest;
 use App\Models\Subject;
 use App\Repositories\ResultRepository;
 use App\Repositories\SubjectRepository;
+use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
@@ -31,8 +32,14 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = $this->subjectRepository->getPanigate();
-        return view('admin.subjects.list', ['subjects' => $subjects]);
+//        $subjects = $this->subjectRepository->getPanigate();
+//        return view('admin.subjects.list', ['subjects' => $subjects]);
+
+        /*api*/
+        $request = Request::create('/api/subjects', 'GET');
+        $subjects = \Route::dispatch($request);
+        $data = json_decode($subjects->getContent(), true);
+        return view('admin.api_subjects.list', compact('data'));
     }
 
     /**
@@ -42,7 +49,10 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subjects.add');
+//        return view('admin.subjects.add');
+
+        /*api*/
+        return view('admin.api_subjects.add');
     }
 
     /**
@@ -53,8 +63,13 @@ class SubjectController extends Controller
      */
     public function store(SubjectRequest $request)
     {
-        $this->subjectRepository->create($request->all());
-        return redirect()->back()->with('noti', "Add successful");
+//        $this->subjectRepository->create($request->all());
+//        return redirect()->back()->with('noti', "Add successful");
+
+        /*api*/
+        $request = Request::create('/api/subjects', 'POST');
+        \Route::dispatch($request);
+        return redirect()->back()->with('noti', 'Add subjects using api successful!');
     }
 
     /**
@@ -76,7 +91,10 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        return view('admin/subjects/update', ['subject' => $subject]);
+//        return view('admin/subjects/update', compact('subject'));
+
+        /*api*/
+        return view('admin.api_subjects.update', compact('subject'));
     }
 
     /**
@@ -88,8 +106,13 @@ class SubjectController extends Controller
      */
     public function update(SubjectRequest $request, $id)
     {
-        $this->subjectRepository->update($id, $request->all());
-        return redirect(route('subjects.index'))->with('noti', 'Update successful');
+//        $this->subjectRepository->update($id, $request->all());
+//        return redirect(route('subjects.index'))->with('noti', 'Update successful');
+
+        /*api*/
+        $request = Request::create("/api/subjects/$id", 'PUT');
+        \Route::dispatch($request);
+        return redirect(route('subjects.index'))->with('noti', 'Update subject using api successful');
     }
 
     /**
@@ -100,7 +123,12 @@ class SubjectController extends Controller
      */
     public function destroy($id)
     {
-        $this->subjectRepository->delete($id);
-        return redirect(route('subjects.index'))->with('noti', 'Delete successful');
+//        $this->subjectRepository->delete($id);
+//        return redirect(route('subjects.index'))->with('noti', 'Delete successful');
+
+        /*api*/
+        $request = Request::create("/api/subjects/$id", 'DELETE');
+        \Route::dispatch($request);
+        return redirect(route('subjects.index'))->with('noti', 'Delete subject using api successful');
     }
 }

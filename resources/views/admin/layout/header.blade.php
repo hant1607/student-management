@@ -20,18 +20,19 @@
                                     class="fa fa-user fa-fw"></i> {{$user_infor->username}}
                             <i>{{$user_infor->getRoleNames()}}</i></a>
                     </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> {{__('Settings')}}</a>
                     </li>
                     <li class="divider"></li>
                     <li>{!! Form::open(['method'=>'POST', 'route'=>'logout']) !!}
                         <i class="fa fa-sign-out fa-fw" style="margin-left: 20px"></i>
-                        {!! Form::submit('Logout', ['style'=> 'display: inline;border: none;background: none']) !!}
+{{--                        {!! Form::submit('Logout', ['style'=> 'display: inline;border: none;background: none']) !!}--}}
+                        <input style="display: inline;border: none;background: none" type="submit" value="{{__('Logout')}}">
                         {!! Form::close() !!}
                     </li>
                 @else
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i>You are not logged in</a>
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i>{{__('You are not logged in')}}</a>
                     </li>
-                    <li><a href="{{route('login')}}"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                    <li><a href="{{route('login')}}"><i class="fa fa-sign-in fa-fw"></i> {{__('Login')}}</a>
                     </li>
                 @endif
             </ul>
@@ -52,82 +53,82 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> {{__('Dashboard')}}</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Faculties<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> {{__('Faculties')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('faculty.index')}}">List Faculties</a>
+                            <a href="{{route('faculty.index')}}">{{__('List Faculties')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('faculty.create')}}">Add Faculties</a>
+                            <a href="{{route('faculty.create')}}">{{__('Add Faculty')}}</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-cube fa-fw"></i> Classes<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cube fa-fw"></i> {{__('Classes')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('class.index')}}">List Classes</a>
+                            <a href="{{route('class.index')}}">{{__('List Classes')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('class.create')}}">Add Classes</a>
+                            <a href="{{route('class.create')}}">{{__('Add Class')}}</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-cube fa-fw"></i> Students<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cube fa-fw"></i> {{__('Students')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('students.index')}}">List Students</a>
+                            <a href="{{route('students.index')}}">{{__('List Students')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('students.create')}}">Add Students</a>
+                            <a href="{{route('students.create')}}">{{__('Add Student')}}</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-cube fa-fw"></i> Subjects<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cube fa-fw"></i> {{__('Subjects')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('subjects.index')}}">List Subjects</a>
+                            <a href="{{route('subjects.index')}}">{{__('List Subjects')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('subjects.create')}}">Add Subject</a>
+                            <a href="{{route('subjects.create')}}">{{__('Add Subject')}}</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-cube fa-fw"></i> Results<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cube fa-fw"></i> {{__('Results')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('results.index')}}">List Results</a>
+                            <a href="{{route('results.index')}}">{{__('List Results')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('results.create')}}">Add Result</a>
+                            <a href="{{route('results.create')}}">{{__('Add Result')}}</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-users fa-fw"></i> User<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> {{__('User')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('users.index')}}">List User</a>
+                            <a href="{{route('users.index')}}">{{__('List Users')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('users.create')}}">Add User</a>
+                            <a href="{{route('users.create')}}">{{__('Add User')}}</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-users fa-fw"></i> Role<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> {{__('Role')}}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{route('roles.index')}}">List Role</a>
+                            <a href="{{route('roles.index')}}">{{__('List Role')}}</a>
                         </li>
                         <li>
-                            <a href="{{route('roles.create')}}">Add Role</a>
+                            <a href="{{route('roles.create')}}">{{__('Add Role')}}</a>
                         </li>
                     </ul>
                 </li>

@@ -10,7 +10,7 @@
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-lg-7" style="padding-bottom:120px">
-                {!! Form::open(['method'=>'PUT', 'route'=>['results.update', 'result'=>$result]]) !!}
+                {!! Form::open(['method'=>'PUT', 'route'=>['results.update', $result->id]]) !!}
                 <div class="form-group">
                     {!! Form::label('Student Name') !!}
                     {!! Form::select('student_id', $student, $result->student_id, ['class'=>'form-control']) !!}

@@ -11,7 +11,9 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use function Symfony\Component\Console\Tests\Command\createClosure;
 
 class UserController extends Controller
 {
@@ -31,8 +33,6 @@ class UserController extends Controller
         $this->classRepository = $classRepository;
         $this->subjectRepository = $subjectRepository;
 
-        //$this->middleware('permission:profile-view', ['only'=>["getProfile"]]);
-        //Auth::user()->middleware('permission:profile-view', ['only'=>['getProfile', 'editProfile', 'updateProfile']]);
         $this->middleware('permission:user-list');
         $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit', 'update']]);
@@ -47,8 +47,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->getPanigate();
-        //$roles = Role::pluck('name', 'name')->all();
-        return view('admin.user.list', compact('users', 'roles'));
+        return view('admin.user.list', compact('users'));
     }
 
     /**
@@ -98,7 +97,10 @@ class UserController extends Controller
         $user = $this->userRepository->find($id);
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
-        return view('admin.user.update', compact('user', 'roles', 'userRole'));
+        $otherPermissions = $this->userRepository->getOtherPermission($id);
+        $userPermissions = DB::table('model_has_permissions')->where('model_has_permissions.model_id', $id)
+            ->pluck('model_has_permissions.permission_id', 'model_has_permissions.permission_id')->all();
+        return view('admin.user.update', compact('user', 'roles', 'userRole', 'otherPermissions', 'userPermissions', 'rolePermission'));
     }
 
     /**
@@ -113,6 +115,7 @@ class UserController extends Controller
         $user = $this->userRepository->update($id, $request->all());
         DB::table('model_has_roles')->where('model_id', $id)->delete();
         $user->assignRole($request->roles);
+        $user->syncPermissions($request->input('permission'));
         return redirect(route('users.index'))->with('noti', 'Update successful');
     }
 

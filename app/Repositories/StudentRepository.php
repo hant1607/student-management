@@ -55,11 +55,11 @@ class StudentRepository extends EloquentRepository
 
         if(isset($data['min_age'])){
             $minYear = Carbon::now()->subYears($data['min_age']);
-            $students->where('birthday', '<', $minYear);
+            $students->where('birthday', '<=', $minYear);
         }
         if(isset($data['max_age'])){
             $maxYear = Carbon::now()->subYears($data['max_age']);
-            $students->where('birthday', '>', $maxYear);
+            $students->where('birthday', '>=', $maxYear);
         }
         if(isset($data['min_mark'])){
             $students->whereHas('results', function ($query) use ($data) {

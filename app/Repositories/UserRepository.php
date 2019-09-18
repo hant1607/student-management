@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserRepository extends EloquentRepository
 {
@@ -47,5 +48,18 @@ class UserRepository extends EloquentRepository
 //        }
 //        $subjects = DB::table('subjects')->whereNotIn('id', $idStudied)->get();
         return $subjects->paginate(10);
+    }
+
+    public function getOtherPermission($id)
+    {
+        $user = $this->model->find($id);
+        $userRole = $user->roles->pluck('name', 'name')->all();
+        if (!empty($userRole)) {
+            $roleId = Role::select('id')->where('name', $userRole)->first()->id;
+            $rolePermission = DB::table('role_has_permissions')->where('role_has_permissions.role_id', $roleId)
+                ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')->all();
+            $otherPermission = DB::table('permissions')->whereNotIn('id', $rolePermission)->get();
+            return $otherPermission;
+        }
     }
 }

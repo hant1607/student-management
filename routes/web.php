@@ -55,15 +55,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function (){
     Route::post('users/update-profile', 'UserController@updateProfile')->name('users.updateProfile');
     Route::resource('users', 'UserController');
 
-    Route::get('results/students/{id}', 'ResultController@getAddStudentResult', function (\App\Models\Result $id){
-        $id->title;
-    })->name('results.addResult');
+    Route::get('results/students/{id}', 'ResultController@getAddStudentResult')->name('results.addResult');
     Route::post('results/students/{id}', 'ResultController@postStudentResult')->name('results.storeResults');
     Route::post('users/update-result/{id}', 'ResultController@updateUserResult')->name('users.updateResult');
 
     Route::resource('roles', 'RoleController');
 
     Route::get('change-lang/{lang}', 'LangController@changeLang')->name('change-lang');
+    Route::get('messages', 'MessageController@index');
+    Route::post('messages', 'MessageController@store');
+    Route::get('current-user', 'UserController@currentUser');
 });
 
 Auth::routes();

@@ -27,6 +27,10 @@ class ResultController extends Controller
         $this->subjectRepository = $subjectRepository;
 
         $this->middleware('permission:mark-add', ['only' => ['getAddStudentResult', 'postStudentResult']]);
+        $this->middleware('permission:result-list');
+        $this->middleware('permission:result-create', ['only'=>['create', 'store']]);
+        $this->middleware('permission:result-edit', ['only'=>['edit', 'update']]);
+        $this->middleware('permission:result-delete', ['only'=>['destroy']]);
     }
 
     /**
@@ -36,7 +40,6 @@ class ResultController extends Controller
      */
     public function index()
     {
-        $slug = SlugService::createSlug(Result::class, 'slug', 'Results list');
         $results = $this->resultRepository->getPanigate();
         return view('admin.results.list', ['results' => $results]);
     }
@@ -48,12 +51,11 @@ class ResultController extends Controller
      */
     public function create()
     {
-        $slug = SlugService::createSlug(Result::class, 'slug', 'Create result');
         $subjects = $this->subjectRepository->getAll();
         $subject = $subjects->pluck('name', 'id')->all();
         $students = $this->studentRepository->getAll();
         $student = $students->pluck('name', 'id')->all();
-        return view('admin.results.add', ['student' => $student, 'subject' => $subject]);
+        return view('admin.results.add', compact('student', 'subject'));
     }
 
     /**
@@ -64,7 +66,6 @@ class ResultController extends Controller
      */
     public function store(ResultRequest $request)
     {
-        $slug = SlugService::createSlug(Result::class, 'slug', "Create result");
         $this->resultRepository->create($request->all());
         return redirect()->back()->with('noti', 'Add successful');
     }
@@ -86,13 +87,14 @@ class ResultController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Result $result)
+    public function edit($id)
     {
+        $result = $this->resultRepository->find($id);
         $subjects = $this->subjectRepository->getAll();
         $subject = $subjects->pluck('name', 'id')->all();
         $students = $this->studentRepository->getAll();
         $student = $students->pluck('name', 'id')->all();
-        return view('admin.results.update', ['result' => $result, 'subject' => $subject, 'student' => $student]);
+        return view('admin.results.update', compact('result', 'subject', 'student'));
     }
 
     /**
@@ -122,7 +124,6 @@ class ResultController extends Controller
 
     public function getAddStudentResult($id)
     {
-        $slug = SlugService::createSlug(Result::class, 'slug', "Create multi result for student");
         $subjects = $this->subjectRepository->getAll();
         //$subject = $subjects->pluck('name', 'id')->all();
         $results = $this->studentRepository->getOne($id);

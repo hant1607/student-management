@@ -36,7 +36,7 @@ class StudentRequest extends FormRequest
                 'username'=>'required|unique:users,username',
                 'email'=>'required|email',
                 'password'=>'required|min:4|max:10',
-                'passwordAgain'=>'required|same:password'
+                'confirm_password'=>'required|same:password'
             ]);
         }
         if($this->student){
@@ -50,12 +50,7 @@ class StudentRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Please enter name student!',
-            'class_id.required'=>'Please choose class',
-            'birthday.required'=>'Please enter birthday',
-            'birthday.date-format'=>'Enter birthday following form yyyy/mm/dd',
-            'gender.required' => 'Please enter gender',
-            'image.max'=>'The size of image must be under 30MB'
+            'image.max'=> __('The size of image must be under 30MB')
         ];
     }
 

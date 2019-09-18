@@ -66,7 +66,6 @@ class RegisterController extends Controller
         $user = \App\Models\User::create([
             'username' => $data['username'],
             'email' => $data['email'],
-            'level' => 0,
             'password' => Hash::make($data['password']),
         ]);
         $user->assignRole('member');

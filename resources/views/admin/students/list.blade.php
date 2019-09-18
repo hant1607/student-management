@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Students
-                    <small>List</small>
+                <h1 class="page-header">{{__('Students')}}
+                    <small>{{__('List')}}</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -13,43 +13,43 @@
             <div class="sidebar-search" style="margin-bottom: 5%; display: block">
                 <div class="col-sm-4">
                     <div>
-                        {!! Form::label('min_mark', "From mark:") !!}
-                        {!! Form::text('min_mark',\Request::get('min_mark'), ['class'=>'form-control']) !!}
+                        {!! Form::label('min_mark', __('Mark')) !!}
+                        {!! Form::text('min_mark',\Request::get('min_mark'), ['class'=>'form-control', 'placeholder' => __('from')]) !!}
                     </div>
                     <div style="margin-top: 5%">
-                        {!! Form::label('min_age',"From age:") !!}
-                        {!! Form::text('min_age',\Request::get('min_age'), ['class'=>'form-control']) !!}
+                        {!! Form::label('min_age',__('Age')) !!}
+                        {!! Form::text('min_age',\Request::get('min_age'), ['class'=>'form-control', 'placeholder' => __('from')]) !!}
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div>
-                        {!! Form::label('max_mark', "To mark:") !!}
-                        {!! Form::text('max_mark',\Request::get('max_mark'), ['class'=>'form-control']) !!}
+                        {!! Form::label('max_mark', __('Mark')) !!}
+                        {!! Form::text('max_mark',\Request::get('max_mark'), ['class'=>'form-control', 'placeholder' => __('to')]) !!}
                     </div>
                     <div style="margin-top: 5%">
-                        {!! Form::label('max_age', "To age:") !!}
-                        {!! Form::text('max_age',\Request::get('max_age'), ['class'=>'form-control']) !!}
+                        {!! Form::label('max_age', __('Age')) !!}
+                        {!! Form::text('max_age',\Request::get('max_age'), ['class'=>'form-control', 'placeholder' => __('to')]) !!}
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    {!! Form::label('Subject:') !!}
-                    {!! Form::select('subject_id', ['' => 'Subject'] + $sj,\Request::get('subject_id'), ['class'=>'form-control']) !!}
+                    {!! Form::label(__('Subject')) !!}
+                    {!! Form::select('subject_id', ['' => __('Subject')] + $sj,\Request::get('subject_id'), ['class'=>'form-control']) !!}
                     <span class="input-group-btn" style="float:right; margin-right: 25%">
                                     <button class="btn btn-default btn-primary" type="submit" name="btnSearch">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </span>
-                    {!! Form::label('Finish all subject:',null, ['style' => 'margin-top:5%']) !!}
+                    {!! Form::label(__('Finish all subject'),null, ['style' => 'margin-top:5%']) !!}
                     <label class="radio-inline">
-                        <input name="finish" value="1" type="radio" {{(\Request::get('finish') == 1) ? 'checked' : ''}}>Yes
+                        <input name="finish" value="1" type="radio" {{(\Request::get('finish') == 1) ? 'checked' : ''}}>{{__('Yes')}}
                     </label>
                     <label class="radio-inline">
-                        <input name="finish" value="2" type="radio" {{(\Request::get('finish') == 2) ? 'checked' : ''}}>No
+                        <input name="finish" value="2" type="radio" {{(\Request::get('finish') == 2) ? 'checked' : ''}}>{{__('No')}}
                     </label>
                 </div>
 
                 <div class="col-sm-12" style="margin-top: 1%">
-                    <label style="margin-right: 1%">Phone:</label>
+                    <label style="margin-right: 1%">{{__('Phone')}}</label>
                     <label class="checkbox-inline">
                         <input name="phones[1]" value="1"
                                type="checkbox" {{isset(\Request::get('phones')[1]) ? 'checked': ''}}>Viettel
@@ -75,24 +75,24 @@
 
             {!! Form::open(['method'=>'post', 'route'=>'students.sendEmail']) !!}
             <div class="col-sm-2" style="float:right; margin-bottom: 2%">
-                <button class="btn btn-danger">Send warning email</button>
+                <button class="btn btn-danger">{{__('Send warning email')}}</button>
             </div>
             {!! Form::close() !!}
 
             <table class="table table-striped table-bordered table-hover" style="margin-top: 25%;">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>User Name</th>
-                    <th>Class</th>
-                    <th>Birthday</th>
-                    <th>Gender</th>
-                    <th>Phone</th>
-                    <th>Image</th>
-                    <th>Result</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>{{__('ID')}}</th>
+                    <th>{{__('Name')}}</th>
+                    <th>{{__('User Name')}}</th>
+                    <th>{{__('Class')}}</th>
+                    <th>{{__('Birthday')}}</th>
+                    <th>{{__('Gender')}}</th>
+                    <th>{{__('Phone')}}</th>
+                    <th>{{__('Image')}}</th>
+                    <th>{{__('Result')}}</th>
+                    <th>{{__('Edit')}}</th>
+                    <th>{{__('Delete')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -123,20 +123,20 @@
                             @endif
                         </td>
                         <td>
-                            <button><a href="{{route('students.show', $student->id)}}">Mark</a></button>
+                            <button><a href="{{route('students.show', $student->id)}}">{{__('Mark')}}</a></button>
                         </td>
                         <td class="center">
                             {{--                            <button><a href="{{route('students.edit', ['student' => $student])}}">Edit</a></button>--}}
                             @can('student-edit')
                                 <button><a href="javascript:void(0)" id="edit-student"
-                                           data-id="{{ $student->id }}">Edit</a>
+                                           data-id="{{ $student->id }}">{{__('Edit')}}</a>
                                 </button>
                             @endcan
                         </td>
                         <td class="center">
                             @can('student-delete')
                                 {!! Form::open(['method'=>'DELETE', 'route'=>['students.destroy', 'student'=>$student]]) !!}
-                                <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>Delete</a>
+                                <button type="submit" onclick="return confirm('Do you want to delete this field?')"><a>{{__('Delete')}}</a>
                                 </button>
                                 {!! Form::close() !!}
                             @endcan
@@ -160,19 +160,19 @@
                           enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-4">Student Name</label>
+                            <label for="name" class="col-sm-4">{{__('Student Name')}}</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" name="name" id="name"
-                                       placeholder="Enter Student Name" value="" maxlength="50">
+                                       placeholder="{{__('Please enter student name')}}" value="" maxlength="50">
                                 <span id="name-error"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4">Class</label>
+                            <label class="col-sm-4">{{__('Class')}}</label>
                             <div class="col-sm-12">
                                 <select class="form-control" name="class_id" id="class_id">
-                                    <option value="">Choose class</option>
+                                    <option value="">{{__('Please choose class')}}</option>
 
                                     @foreach($classes as $class)
                                         <option value="{{$class->id}}">{{$class->name}}</option>
@@ -183,16 +183,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="birthday" class="col-sm-4">Birthday</label>
+                            <label for="birthday" class="col-sm-4">{{__('Birthday')}}</label>
                             <div class="col-sm-12">
                                 <input type="date" class="form-control" id="birthday" name="birthday"
-                                       placeholder="Enter Birthday" value="">
+                                       placeholder="" value="">
                                 <span id="birthday-error"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4">Gender</label>
+                            <label class="col-sm-4">{{__('Gender')}}</label>
                             <div class="col-sm-12">
                                 <select class="form-control" name="gender" id="gender">
                                     <option value="1">Male</option>
@@ -203,16 +203,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone" class="col-sm-4">Phone</label>
+                            <label for="phone" class="col-sm-4">{{__('Phone')}}</label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="phone" name="phone"
-                                       placeholder="Enter Phone" value="">
+                                       placeholder="{{__('Please enter phone number')}}" value="">
                                 <span id="phone-error"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4">Image</label>
+                            <label class="col-sm-4">{{__('Image')}}</label>
                             <div class="col-sm-12">
                                 <input type="file" id="image" name="image">
                                 <img id="student_img" width="100px" height="70px" src="">
@@ -221,8 +221,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="btn-cancel">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="btn-save" value="create">Save changes
+                            <button type="button" class="btn btn-default" id="btn-cancel">{{__('Cancel')}}</button>
+                            <button type="submit" class="btn btn-primary" id="btn-save" value="create">{{__('Save changes')}}
                             </button>
                         </div>
 
@@ -250,7 +250,7 @@
                 var id = $(this).data('id');
                 $.get('admin/students/' + id + '/edit', function (data) {
                     $('#btn-save').val("edit-student");
-                    $('#studentCrudModal').html("Edit Student");
+                    $('#studentCrudModal').html("{{__('Edit Student')}}");
                     $('#ajax-student-modal').modal('show');
                     $('#id').val(data.id);
                     $('#name').val(data.name);

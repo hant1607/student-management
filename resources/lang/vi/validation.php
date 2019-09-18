@@ -33,7 +33,7 @@ return [
     'confirmed' => 'The :attribute confirmation does not match.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
-    'date_format' => 'The :attribute does not match the format :format.',
+    'date_format' => 'Trường :attribute không đúng với định dạng :format.',
     'different' => 'The :attribute and :other must be different.',
     'digits' => 'The :attribute must be :digits digits.',
     'digits_between' => 'The :attribute must be between :min and :max digits.',
@@ -92,7 +92,7 @@ return [
     ],
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
-    'numeric' => 'The :attribute must be a number.',
+    'numeric' => 'Trường :attribute chỉ được nhập số.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'Trường :attribute là bắt buộc.',
@@ -145,6 +145,15 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'username' => 'tên người dùng',
+        'password' => 'mật khẩu',
+        'confirm_password' => 'xác nhận mật khẩu',
+        'phone' => 'số điện thoại',
+        'name' => 'tên',
+        'class_id' => 'lớp',
+        'gender' => 'giới tính',
+        'birthday' => 'ngày sinh',
+    ],
 
 ];

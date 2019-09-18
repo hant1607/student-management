@@ -49,4 +49,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
 }

@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('students', 'Api\StudentController');
+Route::apiResource('subjects', 'Api\SubjectController');

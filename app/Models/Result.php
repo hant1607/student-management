@@ -29,7 +29,7 @@ class Result extends Model
         // TODO: Implement sluggable() method.
         return [
           'slug' => [
-              'source' => 'title'
+              'source' => 'student_id'
           ]
         ];
     }
