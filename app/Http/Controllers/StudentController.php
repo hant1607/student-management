@@ -91,7 +91,7 @@ class StudentController extends Controller
             \DB::rollBack();
             throw new \Exception($e->getMessage());
         }
-        return redirect()->back()->with('noti', 'Add successful!');
+        return redirect()->back()->with('noti', __('Add successful!'));
 
         /*api*/
 //        $request = StudentRequest::create('/api/students', 'POST');

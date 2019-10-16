@@ -29,13 +29,13 @@ class AddMoreRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'subject_id.*.required' => 'The subject field is required',
-            'mark.*.required' => 'The mark field is required',
-            'mark.*.numeric' => 'The mark field must be number',
-            'mark.*.between'=>'The mark field must be between 0 to 10'
-        ];
-    }
+//    public function messages()
+//    {
+//        return [
+//            'subject_id.*.required' => 'The subject field is required',
+//            'mark.*.required' => 'The mark field is required',
+//            'mark.*.numeric' => 'The mark field must be number',
+//            'mark.*.between'=>'The mark field must be between 0 to 10'
+//        ];
+//    }
 }

@@ -62,23 +62,19 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function (){
     Route::resource('roles', 'RoleController');
 
     Route::get('change-lang/{lang}', 'LangController@changeLang')->name('change-lang');
+
+    Route::get('/chat', 'MessageController@getChat')->name('chat');
     Route::get('messages', 'MessageController@index');
     Route::post('messages', 'MessageController@store');
-    Route::get('current-user', 'UserController@currentUser');
+    Route::get('userLogin', function (){
+        return \Illuminate\Support\Facades\Auth::user();
+    });
 });
 
 Auth::routes();
 Route::get('auth/social/{social}', 'SocialAuthController@redirectToProvider')->name('social.login') ;
 Route::get('auth/{social}/callback', 'SocialAuthController@handleProviderCallback');
 
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

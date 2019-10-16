@@ -61,7 +61,7 @@ class SubjectController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubjectRequest $request)
+    public function store()
     {
 //        $this->subjectRepository->create($request->all());
 //        return redirect()->back()->with('noti', "Add successful");

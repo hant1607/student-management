@@ -132,6 +132,14 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#"><i class="far fa-comment"></i> {{__('Chat')}}<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{route('chat')}}">{{__('Chat Room')}}</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

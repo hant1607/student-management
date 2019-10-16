@@ -3,9 +3,12 @@
 namespace App\Repositories;
 
 use App\Http\Requests\StudentRequest;
+use App\Models\ClassModel;
 use App\Models\Result;
 use App\Models\Student;
+use App\Models\User;
 use Carbon\Carbon;
+use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends EloquentRepository
@@ -53,20 +56,20 @@ class StudentRepository extends EloquentRepository
     {
         $students = $this->model->select('*')->with('class', 'user');
 
-        if(isset($data['min_age'])){
+        if (isset($data['min_age'])) {
             $minYear = Carbon::now()->subYears($data['min_age']);
             $students->where('birthday', '<=', $minYear);
         }
-        if(isset($data['max_age'])){
+        if (isset($data['max_age'])) {
             $maxYear = Carbon::now()->subYears($data['max_age']);
             $students->where('birthday', '>=', $maxYear);
         }
-        if(isset($data['min_mark'])){
+        if (isset($data['min_mark'])) {
             $students->whereHas('results', function ($query) use ($data) {
                 $query->where('mark', '>=', $data['min_mark']);
             });
         }
-        if(isset($data['max_mark'])){
+        if (isset($data['max_mark'])) {
             $students->whereHas('results', function ($query) use ($data) {
                 $query->where('mark', '<=', $data['max_mark']);
             });
@@ -101,9 +104,10 @@ class StudentRepository extends EloquentRepository
     public function studentToSendEmail()
     {
         $countSubjects = DB::table('subjects')->count();
-        $students = $this->model->has('subjects', $countSubjects)->whereHas('subjects', function ($query){
-          $query->havingRaw('AVG(mark) < 5');
+        $students = $this->model->has('subjects', $countSubjects)->whereHas('subjects', function ($query) {
+            $query->havingRaw('AVG(mark) < 5');
         });
         return $students->paginate(5);
     }
+
 }

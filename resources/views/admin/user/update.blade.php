@@ -19,18 +19,16 @@
                     {!! Form::label('email', 'Email') !!}
                     {!! Form::email('email', $user->email, ['class' => 'form-control', 'placeholder'=>'Please enter email', 'readonly'=>'readonly']) !!}
                 </div>
-                <div class="form-group">
-                    {!! Form::label('password', 'Password') !!}
-                    {{--                    {!! Form::password('password', $user->password, ['class'=>'form-control', 'placeholder' => 'Please enter password']) !!}--}}
-                    <input class="form-control" type="password" name="password" id="password"
-                           placeholder="Please enter password" value="{{$user->password}}">
-                </div>
-                <div class="form-group">
-                    {!! Form::label('confirm_password', 'Confirm Password') !!}
-                    {{--                    {!! Form::password('passwordAgain',$user->password, ['class'=>'form-control', 'placeholder' => 'Please re-enter password']) !!}--}}
-                    <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                           placeholder="Please enter confirm password" value="{{$user->password}}">
-                </div>
+{{--                <div class="form-group">--}}
+{{--                    {!! Form::label('password', 'Password') !!}--}}
+{{--                    <input class="form-control" type="password" name="password" id="password"--}}
+{{--                           placeholder="Please enter password" value="{{$user->password}}">--}}
+{{--                </div>--}}
+{{--                <div class="form-group">--}}
+{{--                    {!! Form::label('confirm_password', 'Confirm Password') !!}--}}
+{{--                    <input class="form-control" type="password" name="confirm_password" id="confirm_password"--}}
+{{--                           placeholder="Please enter confirm password" value="{{$user->password}}">--}}
+{{--                </div>--}}
                 <div class="form-group">
                     {!! Form::label('Role') !!}
                     {!! Form::select('roles', $roles, $userRole, ['class' => 'form-control']) !!}

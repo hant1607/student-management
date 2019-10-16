@@ -23,15 +23,20 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $arr_validate = [
-            'username' => 'required|unique:users,username',
-            'email' => 'required|email',
-            'password' => 'required|min:4',
-            'confirm_password' => 'required|same:password'
-        ];
-        if ($this->user) {
-            $arr_validate['username'] = 'unique:users,username,' .$this->user;
+        if (isset($this->user)) {
+            $arr_validate = [
+                'username' => 'unique:users,username,' .$this->user,
+                'email' => 'required|email',
+            ];
+            return $arr_validate;
+        } else {
+            $arr_validate = [
+                'username' => 'required|unique:users,username',
+                'email' => 'required|email',
+                'password' => 'required|min:4',
+                'confirm_password' => 'required|same:password'
+            ];
+            return $arr_validate;
         }
-        return $arr_validate;
     }
 }
